@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YourGeeky: the Terminal, in plain English</title>
+<meta name="description" content="YourGeeky is a friendly helper for people who have to use the Mac Terminal. Say what you need in plain words, and it explains each step and asks before changing anything.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f5bd3'/%3E%3Cpath d='M8 11l5 5-5 5' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 22h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #fbfaf7; --surface: #ffffff; --text: #1d1f24; --muted: #5b6070;
+    --accent: #2f5bd3; --accent-text: #ffffff; --border: #e3e1da;
+    --term-bg: #16181d; --term-text: #e8e9ec; --term-dim: #8b90a0; --term-green: #7fd49b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #121317; --surface: #1b1d23; --text: #ecedf0; --muted: #a2a6b3;
+      --accent: #7c9cff; --accent-text: #0d1020; --border: #2c2f37; --term-bg: #0b0c0f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  header.top { display: flex; align-items: center; justify-content: space-between; padding: 20px 0; }
+  .logo { font-weight: 700; font-size: 20px; color: var(--text); text-decoration: none; display: flex; gap: 10px; align-items: center; }
+  .logo svg { width: 28px; height: 28px; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
+  nav a:hover { color: var(--text); }
+  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 48px 0 72px; }
+  .hero > * { min-width: 0; }
+  h1 { font-size: 46px; line-height: 1.1; margin: 0 0 18px; letter-spacing: -0.02em; }
+  .lead { font-size: 20px; color: var(--muted); margin: 0 0 28px; }
+  .install { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .install p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
+  .cmd { display: flex; gap: 8px; align-items: stretch; }
+  .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; background: var(--term-bg); color: var(--term-text);
+    border-radius: 8px; padding: 12px 14px; font: 14px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  button.copy { background: var(--accent); color: var(--accent-text); border: 0; border-radius: 8px; padding: 0 18px;
+    font: 600 15px/1 inherit; font-family: inherit; cursor: pointer; }
+  button.copy:focus-visible { outline: 3px solid var(--text); outline-offset: 2px; }
+  .term { background: var(--term-bg); color: var(--term-text); border-radius: 14px; padding: 0 0 20px;
+    font: 14.5px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; box-shadow: 0 20px 50px rgba(0,0,0,.18); overflow: hidden; }
+  .term .bar { display: flex; gap: 7px; padding: 12px 14px; background: rgba(255,255,255,.06); margin-bottom: 14px; }
+  .term .bar span { width: 11px; height: 11px; border-radius: 50%; background: #555a66; }
+  .term p { margin: 0 20px 10px; }
+  .term .you { color: var(--term-green); }
+  .term .dim { color: var(--term-dim); }
+  section { padding: 56px 0; border-top: 1px solid var(--border); }
+  h2 { font-size: 30px; margin: 0 0 24px; letter-spacing: -0.01em; }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; counter-reset: s; padding: 0; margin: 0; list-style: none; }
+  .steps li { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  .steps li::before { counter-increment: s; content: counter(s); display: inline-flex; width: 30px; height: 30px; border-radius: 50%;
+    align-items: center; justify-content: center; background: var(--accent); color: var(--accent-text); font-weight: 700; margin-bottom: 10px; }
+  .steps h3, .grid h3 { margin: 0 0 6px; font-size: 18px; }
+  .steps p, .grid p { margin: 0; color: var(--muted); font-size: 16px; }
+  .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 28px; padding: 0; margin: 0; list-style: none; }
+  .grid li { padding: 10px 0; }
+  .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .promises li { padding-left: 30px; position: relative; }
+  .promises li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+  details { border-bottom: 1px solid var(--border); padding: 14px 0; }
+  summary { cursor: pointer; font-weight: 600; font-size: 18px; }
+  details p { color: var(--muted); margin: 10px 0 0; }
+  footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
+  @media (max-width: 760px) {
+    .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
+    h1 { font-size: 34px; } .lead { font-size: 18px; }
+    .steps, .grid { grid-template-columns: 1fr; }
+    nav { display: none; }
+    .wrap { padding: 0 16px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="logo" href="/">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
+      YourGeeky
+    </a>
+    <nav><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a></nav>
+  </header>
+
+  <div class="hero">
+    <div>
+      <h1>The Terminal, in plain English.</h1>
+      <p class="lead">Someone told you to "just open Terminal and run this"? YourGeeky does it with you. Say what you need in your own words. It explains each step and asks before changing anything.</p>
+      <div class="install" id="install">
+        <p>To install, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
+        <div class="cmd">
+          <code id="cmd">curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash</code>
+          <button class="copy" id="copy" type="button">Copy</button>
+        </div>
+      </div>
+    </div>
+    <div class="term" aria-label="Example conversation with YourGeeky">
+      <div class="bar"><span></span><span></span><span></span></div>
+      <p class="you">› install Python</p>
+      <p>You want Python on your Mac. Here's my plan:</p>
+      <p class="dim">1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts</p>
+      <p>Your Mac will ask for your password. Nothing shows while you type. That's normal.</p>
+      <p>Okay to go ahead? <span class="you">yes</span></p>
+      <p>Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.</p>
+    </div>
+  </div>
+</div>
+
+<section id="how"><div class="wrap">
+  <h2>How it works</h2>
+  <ol class="steps">
+    <li><h3>Say what you need</h3><p>"Install Python." "What does this error mean?" "Run these steps from the guide." No special words needed.</p></li>
+    <li><h3>See the plan</h3><p>YourGeeky says back what it heard and lists the steps in plain words before it does anything.</p></li>
+    <li><h3>Say yes, and it's done</h3><p>It asks before anything risky, does the work, and checks that it worked.</p></li>
+  </ol>
+</div></section>
+
+<section id="help"><div class="wrap">
+  <h2>What it helps with</h2>
+  <ul class="grid">
+    <li><h3>Installing things</h3><p>Python, Node, Git, and the other tools people ask you to get.</p></li>
+    <li><h3>Instructions from a guide</h3><p>Paste them in. It explains each line, then runs them with you.</p></li>
+    <li><h3>Confusing error messages</h3><p>It tells you what went wrong and how to fix it.</p></li>
+    <li><h3>"command not found"</h3><p>It works out why and fixes it so it stays fixed.</p></li>
+    <li><h3>Setting up your Mac</h3><p>Homebrew and Apple's developer tools, with the pop-ups explained.</p></li>
+    <li><h3>"permission denied"</h3><p>It finds the safe fix and warns you before any password prompt.</p></li>
+    <li><h3>Finding folders</h3><p>"Where am I?" "Open my Downloads." It tells you in plain words.</p></li>
+    <li><h3>Getting unstuck</h3><p>Frozen screen or something that won't stop? It gets you out.</p></li>
+    <li><h3>Projects people share</h3><p>Got a GitHub link? It downloads it, sets it up, and starts it.</p></li>
+    <li><h3>Updating and removing</h3><p>It shows what's installed and cleans up what you don't need.</p></li>
+  </ul>
+</div></section>
+
+<section><div class="wrap">
+  <h2>Our promises</h2>
+  <ul class="promises">
+    <li>It always asks before installing, deleting, or changing settings.</li>
+    <li>It warns you before your Mac asks for your password.</li>
+    <li>It never deletes files outside a folder you choose.</li>
+    <li>It stops and explains if pasted instructions look unsafe.</li>
+    <li>Want to learn? Start it with <code>yourgeeky --show-commands</code> to see the real commands too.</li>
+  </ul>
+</div></section>
+
+<section id="faq"><div class="wrap">
+  <h2>Questions</h2>
+  <details><summary>Do I need to know anything about computers?</summary><p>No. If you can type a sentence, you can use YourGeeky.</p></details>
+  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky uses Claude Code to do its work, and offers to install it the first time you start.</p></details>
+  <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. To leave, type <code>/exit</code>.</p></details>
+  <details><summary>Does it work on Windows?</summary><p>Not yet. The first version is for Mac.</p></details>
+  <details><summary>Is it safe?</summary><p>It asks before anything that changes your computer, and you can always say no. Nothing happens without your yes.</p></details>
+</div></section>
+
+<div class="wrap"><footer>© 2026 YourGeeky</footer></div>
+
+<script>
+  document.getElementById('copy').addEventListener('click', function () {
+    var btn = this, text = document.getElementById('cmd').textContent;
+    var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 2000); };
+    if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
+  });
+</script>
+</body>
+</html>
