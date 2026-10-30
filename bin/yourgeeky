@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+# YourGeeky: a friendly helper for people who have to use the Terminal.
+# Starts Claude Code with plain-English guidance and safety rules.
+# Written for the bash 3.2 that ships with macOS.
+
+set -euo pipefail
+
+VERSION="0.1.0"
+
+# Find the real install folder, even when this script is run through a symlink.
+resolve_home() {
+  local src="${BASH_SOURCE[0]}"
+  while [ -L "$src" ]; do
+    local dir
+    dir="$(cd -P "$(dirname "$src")" && pwd)"
+    src="$(readlink "$src")"
+    case "$src" in /*) ;; *) src="$dir/$src" ;; esac
+  done
+  cd -P "$(dirname "$src")/.." && pwd
+}
+
+YG_HOME="$(resolve_home)"
+GUIDE="$YG_HOME/prompts/guide.md"
+CLAUDE_BIN="${YOURGEEKY_CLAUDE:-claude}"
+
+say() { printf '%s\n' "$*"; }
+
+usage() {
+  cat <<USAGE
+YourGeeky $VERSION: a friendly helper for the Terminal.
+
+How to use it:
+  yourgeeky                      Start a conversation
+  yourgeeky "install Python"     Start with a request
+  yourgeeky --show-commands      Also show the real commands, so you can learn them
+
+Other options:
+  --help       Show this message
+  --version    Show the version number
+USAGE
+}
+
+ask_yes_no() {
+  local answer
+  printf '%s [y/n] ' "$1"
+  read -r answer || return 1
+  case "$answer" in [Yy]*) return 0 ;; *) return 1 ;; esac
+}
+
+ensure_claude() {
+  if command -v "$CLAUDE_BIN" >/dev/null 2>&1; then
+    return 0
+  fi
+  say ""
+  say "YourGeeky uses Claude Code to do its work, and it isn't installed yet."
+  say "Installing it takes about a minute. You'll need a Claude account to sign in afterwards."
+  say ""
+  if ask_yes_no "Install Claude Code now?"; then
+    curl -fsSL https://claude.ai/install.sh | bash
+    export PATH="$HOME/.local/bin:$PATH"
+    if ! command -v "$CLAUDE_BIN" >/dev/null 2>&1; then
+      say "Claude Code was installed, but this window can't find it yet."
+      say "Close this Terminal window, open a new one, and type: yourgeeky"
+      exit 1
+    fi
+  else
+    say "No problem. When you're ready, run yourgeeky again."
+    exit 1
+  fi
+}
+
+build_prompt() {
+  local mode
+  if [ "$1" = "show" ]; then
+    mode="The person wants to learn. Show each command in a code block with a one-line plain explanation of what it does."
+  else
+    mode="Hide raw commands unless the person asks to see them. Describe what you are doing in plain words instead."
+  fi
+  local text
+  text="$(cat "$GUIDE")"
+  printf '%s' "${text/COMMANDS_MODE/$mode}"
+}
+
+main() {
+  local commands="hide"
+  local request=""
+
+  while [ $# -gt 0 ]; do
+    case "$1" in
+      -h|--help) usage; exit 0 ;;
+      -v|--version) say "yourgeeky $VERSION"; exit 0 ;;
+      --show-commands) commands="show" ;;
+      --) shift; request="$*"; break ;;
+      -*) say "I don't recognise the option $1."; say ""; usage; exit 2 ;;
+      *) request="${request:+$request }$1" ;;
+    esac
+    shift
+  done
+
+  if [ "$(uname -s)" != "Darwin" ] && [ -z "${YOURGEEKY_ALLOW_ANY_OS:-}" ]; then
+    say "This version of YourGeeky is made for Mac. Support for other computers is coming later."
+    exit 1
+  fi
+
+  if [ ! -f "$GUIDE" ]; then
+    say "YourGeeky is missing a file it needs ($GUIDE). Please reinstall it."
+    exit 1
+  fi
+
+  ensure_claude
+
+  say "Hi, I'm YourGeeky. Tell me what you need in plain words, like \"install Python\"."
+  say "I'll explain each step and ask before changing anything. Type /exit to leave."
+  say ""
+
+  local prompt
+  prompt="$(build_prompt "$commands")"
+  if [ -n "$request" ]; then
+    exec "$CLAUDE_BIN" --append-system-prompt "$prompt" "$request"
+  else
+    exec "$CLAUDE_BIN" --append-system-prompt "$prompt"
+  fi
+}
+
+main "$@"
