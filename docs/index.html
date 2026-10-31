@@ -98,6 +98,8 @@
   .top20 li { break-inside: avoid; padding: 4px 0; color: var(--muted); }
   .top20 li strong { color: var(--text); }
   @media (max-width: 760px) { .top20 ol { columns: 1; } }
+  .get-claude { display: inline-block; margin-top: 4px; padding: 7px 14px; font-size: 14px; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; text-decoration: none; }
+  .get-claude:hover { background: var(--accent); color: var(--accent-text); }
   .safety .qa p { margin: 0 0 12px; }
   .more-btn { display: block; width: fit-content; margin-top: 8px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--accent); border-radius: 999px; cursor: pointer; }
   .more-btn:hover { background: var(--accent); color: var(--accent-text); }
@@ -307,7 +309,7 @@
   <p class="intro">YourGeeky doesn't do the work alone. It teams up with an AI assistant that works right inside your Mac's Terminal, so it can actually do things on your computer for you. You choose which one when you install.</p>
   <ul class="grid">
     <li><h3>Free: Google's AI</h3><p>Google's Antigravity CLI. Sign in with any Google account and pay nothing. Good for everyday help, with a daily usage limit.</p></li>
-    <li><h3>Upgrade: Claude Code</h3><p>The AI assistant from Anthropic, the company behind Claude. It needs a paid Claude plan (Pro starts at $20 a month) and gives you more room to work.</p></li>
+    <li><h3>Upgrade: Claude Code</h3><p>The AI assistant from Anthropic, the company behind Claude. It needs a paid Claude plan (Pro starts at $20 a month) and gives you more room to work.</p><!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). --><a class="get-claude" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a></li>
     <li><h3>Either way, it does the typing</h3><p>It works out the right commands, runs them, reads what comes back, and knows what to try next.</p></li>
     <li><h3>Either way, it asks first</h3><p>Before it runs anything, it asks for your permission. You can always say no.</p></li>
   </ul>
