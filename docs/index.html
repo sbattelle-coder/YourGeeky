@@ -100,6 +100,16 @@
   @media (max-width: 760px) { .top20 ol { columns: 1; } }
   .get-claude { display: inline-block; margin-top: 4px; padding: 7px 14px; font-size: 14px; font-weight: 600; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; text-decoration: none; }
   .get-claude:hover { background: var(--accent); color: var(--accent-text); }
+  .why-claude { margin-top: 28px; display: flex; gap: 28px; align-items: center; justify-content: space-between; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px 28px; }
+  .why-claude h3 { margin: 0 0 6px; font-size: 21px; }
+  .why-claude p { margin: 0 0 10px; color: var(--muted); }
+  .why-claude ul { margin: 0 0 12px; padding-left: 20px; color: var(--muted); }
+  .why-claude li { padding: 3px 0; }
+  .why-claude li strong { color: var(--text); }
+  .why-claude .fine { margin: 0; font-size: 14.5px; }
+  a.why-claude-btn { flex-shrink: 0; background: var(--accent); color: var(--accent-text); font-weight: 700; text-decoration: none; padding: 13px 24px; border-radius: 10px; font-size: 17px; }
+  a.why-claude-btn:hover { filter: brightness(1.08); }
+  @media (max-width: 760px) { .why-claude { flex-direction: column; align-items: flex-start; padding: 20px; } }
   .safety .qa p { margin: 0 0 12px; }
   .more-btn { display: block; width: fit-content; margin-top: 8px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--accent); border-radius: 999px; cursor: pointer; }
   .more-btn:hover { background: var(--accent); color: var(--accent-text); }
@@ -315,6 +325,21 @@
     <li><h3>Either way, it asks first</h3><p>Before it runs anything, it asks for your permission. You can always say no.</p></li>
   </ul>
   <p class="intro" style="margin-top:24px">On their own, these assistants are built for programmers and talk like them. YourGeeky gives them plain-English instructions and extra safety rules, so they explain every step as if you've never opened the Terminal before. You can switch any time with <code>yourgeeky --use claude</code> or <code>yourgeeky --use google</code>.</p>
+  <div class="why-claude" id="get-claude">
+    <div>
+      <h3>Should I get Claude?</h3>
+      <p>Start with the free option. Plenty of people never need anything more. Claude is worth it if:</p>
+      <ul>
+        <li><strong>You keep hitting the free daily limit.</strong> A paid Claude plan gives you much more room before it asks you to wait.</li>
+        <li><strong>You have bigger jobs.</strong> Setting up a whole project or website, or a long string of steps in one go.</li>
+        <li><strong>You'd use Claude for other things too.</strong> The same plan gives you the Claude app on your computer and phone, for writing, questions and help with everyday tasks.</li>
+        <li><strong>You already pay for Claude.</strong> Then Claude Code is already included, so you may as well use it.</li>
+      </ul>
+      <p class="fine">Claude Pro starts at $20 a month, and you can cancel any time. After you sign up, type <code>yourgeeky --use claude</code> in Terminal and YourGeeky switches over.</p>
+    </div>
+    <!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). -->
+    <a class="why-claude-btn" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a>
+  </div>
 </div></section>
 
 <section id="how"><div class="wrap">
