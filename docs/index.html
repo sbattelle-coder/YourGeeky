@@ -220,7 +220,7 @@
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
       YourGeeky
     </a>
-    <nav><a href="#voice">Voice</a><a href="#ai">Which AI</a><a href="#how">How it works</a><a href="#help">Uses</a><a href="#safety">Safety</a><a href="#free">Why free</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
+    <nav><a href="#voice">Voice</a><a href="#how">How it works</a><a href="#help">Uses</a><a href="#ai">Which AI</a><a href="#safety">Safety</a><a href="#free">Why free</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
   </header>
 
   <div class="hero">
@@ -276,33 +276,6 @@
     </div>
   </div>
   <p class="demo-note">You only talk to YourGeeky in plain English. It works out the Terminal commands and runs them for you. Before anything that changes your Mac, it stops and shows a Yes/No choice, and nothing happens until you press Return on Yes. If your Mac asks for your password, you type it in yourself. In real life, the conversation and the commands appear in the same Terminal window. We've split them here so it's easier to follow.</p>
-</div></section>
-
-<section id="ai"><div class="wrap">
-  <h2>The AI behind YourGeeky</h2>
-  <p class="intro">YourGeeky doesn't do the work alone. It teams up with an AI assistant that works right inside your Mac's Terminal, so it can actually do things on your computer for you. You choose which one when you install.</p>
-  <ul class="grid">
-    <li><h3>Free: Google's AI</h3><p>Google's Antigravity CLI. Sign in with any Google account and pay nothing. Good for everyday help, with a daily usage limit.</p></li>
-    <li><h3>Upgrade: Claude Code</h3><p>The AI assistant from Anthropic, the company behind Claude. It needs a paid Claude plan (Pro starts at $20 a month) and gives you more room to work.</p><!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). --><a class="get-claude" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a></li>
-    <li><h3>Either way, it does the typing</h3><p>It works out the right commands, runs them, reads what comes back, and knows what to try next.</p></li>
-    <li><h3>Either way, it asks first</h3><p>Before it runs anything, it asks for your permission. You can always say no.</p></li>
-  </ul>
-  <p class="intro" style="margin-top:24px">On their own, these assistants are built for programmers and talk like them. YourGeeky gives them plain-English instructions and extra safety rules, so they explain every step as if you've never opened the Terminal before. You can switch any time with <code>yourgeeky --use claude</code> or <code>yourgeeky --use google</code>.</p>
-  <div class="why-claude" id="get-claude">
-    <div>
-      <h3>Should I get Claude?</h3>
-      <p>Start with the free option. Plenty of people never need anything more. Claude is worth it if:</p>
-      <ul>
-        <li><strong>You keep hitting the free daily limit.</strong> A paid Claude plan gives you much more room before it asks you to wait.</li>
-        <li><strong>You have bigger jobs.</strong> Setting up a whole project or website, or a long string of steps in one go.</li>
-        <li><strong>You'd use Claude for other things too.</strong> The same plan gives you the Claude app on your computer and phone, for writing, questions and help with everyday tasks.</li>
-        <li><strong>You already pay for Claude.</strong> Then Claude Code is already included, so you may as well use it.</li>
-      </ul>
-      <p class="fine">Claude Pro starts at $20 a month, and you can cancel any time. After you sign up, type <code>yourgeeky --use claude</code> in Terminal and YourGeeky switches over.</p>
-    </div>
-    <!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). -->
-    <a class="why-claude-btn" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a>
-  </div>
 </div></section>
 
 <section id="how"><div class="wrap">
@@ -365,6 +338,33 @@
     <li>It stops and explains if pasted instructions look unsafe.</li>
     <li>Want to learn? Start it with <code>yourgeeky --show-commands</code> to see the real commands too.</li>
   </ul>
+</div></section>
+
+<section id="ai"><div class="wrap">
+  <h2>The AI behind YourGeeky</h2>
+  <p class="intro">YourGeeky doesn't do the work alone. It teams up with an AI assistant that works right inside your Mac's Terminal, so it can actually do things on your computer for you. You choose which one when you install.</p>
+  <ul class="grid">
+    <li><h3>Free: Google's AI</h3><p>Google's Antigravity CLI. Sign in with any Google account and pay nothing. Good for everyday help, with a daily usage limit.</p></li>
+    <li><h3>Upgrade: Claude Code</h3><p>The AI assistant from Anthropic, the company behind Claude. It needs a paid Claude plan (Pro starts at $20 a month) and gives you more room to work.</p><!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). --><a class="get-claude" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a></li>
+    <li><h3>Either way, it does the typing</h3><p>It works out the right commands, runs them, reads what comes back, and knows what to try next.</p></li>
+    <li><h3>Either way, it asks first</h3><p>Before it runs anything, it asks for your permission. You can always say no.</p></li>
+  </ul>
+  <p class="intro" style="margin-top:24px">On their own, these assistants are built for programmers and talk like them. YourGeeky gives them plain-English instructions and extra safety rules, so they explain every step as if you've never opened the Terminal before. You can switch any time with <code>yourgeeky --use claude</code> or <code>yourgeeky --use google</code>.</p>
+  <div class="why-claude" id="get-claude">
+    <div>
+      <h3>Should I get Claude?</h3>
+      <p>Start with the free option. Plenty of people never need anything more. Claude is worth it if:</p>
+      <ul>
+        <li><strong>You keep hitting the free daily limit.</strong> A paid Claude plan gives you much more room before it asks you to wait.</li>
+        <li><strong>You have bigger jobs.</strong> Setting up a whole project or website, or a long string of steps in one go.</li>
+        <li><strong>You'd use Claude for other things too.</strong> The same plan gives you the Claude app on your computer and phone, for writing, questions and help with everyday tasks.</li>
+        <li><strong>You already pay for Claude.</strong> Then Claude Code is already included, so you may as well use it.</li>
+      </ul>
+      <p class="fine">Claude Pro starts at $20 a month, and you can cancel any time. After you sign up, type <code>yourgeeky --use claude</code> in Terminal and YourGeeky switches over.</p>
+    </div>
+    <!-- Swap this link for a Claude referral link if you get one (type /passes in Claude Code). -->
+    <a class="why-claude-btn" href="https://claude.com/pricing" target="_blank" rel="noopener">Get Claude</a>
+  </div>
 </div></section>
 
 <section id="setup" class="setup"><div class="wrap"><div class="setup-col">
