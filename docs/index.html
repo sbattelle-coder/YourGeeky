@@ -119,6 +119,13 @@
   .free h3 { margin: 0 0 8px; font-size: 18px; }
   .free p { margin: 0; color: var(--muted); }
   .free a { color: var(--accent); }
+  .coffee { margin-top: 36px; display: flex; gap: 24px; align-items: center; justify-content: space-between; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 14px; padding: 22px 24px; }
+  .coffee h3 { margin: 0 0 6px; font-size: 19px; }
+  .coffee p { margin: 0; color: var(--muted); }
+  .coffee-btn { flex-shrink: 0; background: #ffdd00; color: #1d1f24; font-weight: 700; text-decoration: none; padding: 12px 20px; border-radius: 10px; }
+  .coffee-btn:hover { filter: brightness(.95); }
+  @media (max-width: 760px) { .coffee { flex-direction: column; align-items: flex-start; } }
   .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .promises li { padding-left: 30px; position: relative; }
   .promises li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
@@ -321,6 +328,13 @@
       <p>Every line of YourGeeky is public on <a href="https://github.com/sbattelle-coder/YourGeeky">GitHub</a>. Anyone can read it and check exactly what it does: the installer, the tool, and the instructions it gives the AI are all there.</p>
     </div>
   </div>
+  <div class="coffee">
+    <div>
+      <h3>Like YourGeeky? Buy the developer a coffee</h3>
+      <p>YourGeeky is free and always will be. If it saved you a headache, a small tip helps keep it going and pays for new features like the Windows version.</p>
+    </div>
+    <a class="coffee-btn" href="https://buymeacoffee.com/YOUR-PAGE" target="_blank" rel="noopener">☕ Buy a coffee</a>
+  </div>
 </div></section>
 
 <section id="faq"><div class="wrap">
@@ -359,7 +373,7 @@
   </form>
 </div></section>
 
-<div class="wrap"><footer>© 2026 YourGeeky · <a href="https://github.com/sbattelle-coder/YourGeeky" style="color:inherit">See the code on GitHub</a></footer></div>
+<div class="wrap"><footer>© 2026 YourGeeky · <a href="https://github.com/sbattelle-coder/YourGeeky" style="color:inherit">See the code on GitHub</a> · <a href="https://buymeacoffee.com/YOUR-PAGE" style="color:inherit" target="_blank" rel="noopener">☕ Buy the developer a coffee</a></footer></div>
 
 <script>
   document.getElementById('copy').addEventListener('click', function () {
