@@ -50,6 +50,13 @@
   .term .bar span { width: 11px; height: 11px; border-radius: 50%; background: #555a66; }
   .term p { margin: 0 20px 10px; }
   .term .you { color: var(--term-green); }
+  .term-body { min-height: 340px; }
+  .term .ok { color: var(--term-green); }
+  .term .caret { display: inline-block; width: 8px; height: 1.1em; vertical-align: -0.2em; background: var(--term-green);
+    animation: blink 1s steps(1) infinite; }
+  .term .fade { animation: fadein .35s ease-out; }
+  @keyframes blink { 50% { opacity: 0; } }
+  @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
   .term .dim { color: var(--term-dim); }
   section { padding: 56px 0; border-top: 1px solid var(--border); }
   h2 { font-size: 30px; margin: 0 0 24px; letter-spacing: -0.01em; }
@@ -91,6 +98,7 @@
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
     h1 { font-size: 34px; } .lead { font-size: 18px; }
     .steps, .grid { grid-template-columns: 1fr; }
+    .term-body { min-height: 400px; }
     nav { display: none; }
     .wrap { padding: 0 16px; }
   }
@@ -128,14 +136,16 @@
         </div>
       </div>
     </div>
-    <div class="term" aria-label="Example conversation with YourGeeky">
+    <div class="term">
       <div class="bar"><span></span><span></span><span></span></div>
-      <p class="you">› install Python</p>
-      <p>You want Python on your Mac. Here's my plan:</p>
-      <p class="dim">1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts</p>
-      <p>Your Mac will ask for your password. Nothing shows while you type. That's normal.</p>
-      <p>Okay to go ahead? <span class="you">yes</span></p>
-      <p>Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.</p>
+      <div class="term-body" id="demo">
+        <p class="you">› install Python</p>
+        <p>You want Python on your Mac. Here's my plan:</p>
+        <p class="dim">1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts</p>
+        <p>Your Mac will ask for your password. Nothing shows while you type. That's normal.</p>
+        <p>Okay to go ahead? <span class="you">yes</span></p>
+        <p>Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -254,6 +264,82 @@
       })
       .catch(function () { status.textContent = "Sorry, that didn't send. Please check your connection and try again."; });
   });
+</script>
+<script>
+  // Homepage demo: plays sample conversations in the fake Terminal. The static
+  // conversation in #demo stays in place when motion is reduced or scripts are off.
+  (function () {
+    var box = document.getElementById('demo');
+    if (!box || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var SCENES = [
+      [['you', 'install Python'],
+       ['say', "You want Python on your Mac. Here's my plan:"],
+       ['dim', '1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts'],
+       ['say', 'Your Mac will ask for your password. Nothing shows while you type. That\'s normal.'],
+       ['ask', 'Okay to go ahead?', 'yes'],
+       ['work', 'Installing Python', 'Python installed'],
+       ['say', 'Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.']],
+      [['you', 'it says command not found'],
+       ['say', 'That means your Mac can\'t find the program you typed. Let me check why.'],
+       ['work', 'Looking for Node', 'Found Node'],
+       ['say', 'Node is installed, but your Terminal doesn\'t know where it is. I can add it to your settings so this stops happening.'],
+       ['ask', 'Okay to change your Terminal settings?', 'yes'],
+       ['say', 'Fixed. Open a new Terminal window and <span class="you">node</span> will work.']],
+      [['you', 'my screen is frozen and won\'t stop'],
+       ['say', 'Something is still running. Hold <strong>Control</strong> and press <strong>C</strong> to stop it.'],
+       ['dim', 'That works for most programs. If it doesn\'t, tell me what you see and I\'ll help.'],
+       ['say', 'You\'re back. Nothing was lost.']]
+    ];
+    var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
+    var add = function (html, cls) {
+      var p = document.createElement('p');
+      p.className = 'fade' + (cls ? ' ' + cls : '');
+      p.innerHTML = html;
+      box.appendChild(p);
+      return p;
+    };
+    var type = function (el, prefix, text) {
+      var i = 0;
+      return new Promise(function (done) {
+        (function next() {
+          el.innerHTML = prefix + text.slice(0, i) + '<span class="caret"></span>';
+          if (i++ < text.length) setTimeout(next, 45 + Math.random() * 60);
+          else { el.innerHTML = prefix + text; done(); }
+        })();
+      });
+    };
+    var step = function (s) {
+      if (s[0] === 'you') {
+        var p = add('', 'you');
+        return wait(300).then(function () { return type(p, '› ', s[1]); }).then(function () { return wait(700); });
+      }
+      if (s[0] === 'ask') {
+        var q = add(s[1] + ' ');
+        var a = document.createElement('span');
+        a.className = 'you';
+        q.appendChild(a);
+        return wait(900).then(function () { return type(a, '', s[2]); }).then(function () { return wait(500); });
+      }
+      if (s[0] === 'work') {
+        var w = add(s[1], 'dim'), n = 0;
+        return new Promise(function (done) {
+          var t = setInterval(function () {
+            w.textContent = s[1] + '.'.repeat(++n % 4);
+            if (n > 9) { clearInterval(t); w.innerHTML = '<span class="ok">✓</span> ' + s[2]; done(); }
+          }, 250);
+        }).then(function () { return wait(400); });
+      }
+      add(s[1], s[0] === 'dim' ? 'dim' : '');
+      return wait(1400);
+    };
+    var play = function (i) {
+      box.innerHTML = '';
+      SCENES[i].reduce(function (chain, s) { return chain.then(function () { return step(s); }); }, Promise.resolve())
+        .then(function () { return wait(3500); })
+        .then(function () { play((i + 1) % SCENES.length); });
+    };
+    play(0);
+  })();
 </script>
 </body>
 </html>
