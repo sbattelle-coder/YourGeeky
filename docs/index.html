@@ -183,7 +183,7 @@
         <p>Yes. Pasting commands you don't understand into the Terminal is a fair thing to be careful about, so here is exactly what the install line does, and nothing more.</p>
         <h3>What the install line does</h3>
         <ol>
-          <li><strong>Downloads YourGeeky's installer from GitHub.</strong> It's public, so anyone can <a href="https://github.com/sbattelle-coder/YourGeeky/blob/main/install.sh">read every line of it</a> before running it.</li>
+          <li><strong>Downloads YourGeeky's installer from this website.</strong> It's a plain text file, so anyone can <a href="/install.sh">read every line of it</a> before running it.</li>
           <li><strong>Puts YourGeeky in its own folder</strong> called <code>.yourgeeky</code> inside your home folder. It doesn't touch system files and doesn't ask for your Mac password.</li>
           <li><strong>Adds one line to your Terminal settings</strong> (only if needed) so that typing <code>yourgeeky</code> works.</li>
           <li><strong>Asks you one question</strong>, then installs either Google's free AI or Claude Code, using the official installer from Google or Anthropic.</li>
@@ -204,7 +204,7 @@
       <div class="install" id="install">
         <p><strong>To set up YourGeeky and its AI</strong>, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
         <div class="cmd">
-          <code id="cmd">curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash</code>
+          <code id="cmd">curl -fsSL https://yourgeeky.com/install.sh | bash</code>
           <button class="copy" id="copy" type="button">Copy</button>
         </div>
         <p class="after">It asks you one question: do you have a paid Claude plan? Most people say no, and it sets up Google's free AI, which you sign in to with any Google account. If you say yes, it sets up Claude Code instead. Then type <code>yourgeeky</code> to start.</p>

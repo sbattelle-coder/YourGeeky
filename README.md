@@ -12,7 +12,7 @@ Version 1 is for Mac.
 Open the Terminal app, paste this line, and press Return:
 
 ```
-curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash
+curl -fsSL https://yourgeeky.com/install.sh | bash
 ```
 
 The installer asks whether you have a paid Claude plan. If not, it sets up Google's free

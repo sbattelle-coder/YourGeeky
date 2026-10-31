@@ -3,7 +3,9 @@
 # and sets up the AI it uses: Google's free Antigravity CLI, or Claude Code for
 # people with a paid Claude plan.
 #
-#   curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash
+#   curl -fsSL https://yourgeeky.com/install.sh | bash
+#
+# This file lives in docs/ so the website serves it at yourgeeky.com/install.sh.
 #
 # Run from a downloaded copy of the repo, it installs that copy instead.
 
@@ -20,8 +22,8 @@ say "Installing YourGeeky..."
 src=""
 if [ -n "${BASH_SOURCE[0]:-}" ] && [ -f "${BASH_SOURCE[0]}" ]; then
   here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-  if [ -f "$here/bin/yourgeeky" ]; then
-    src="$here"
+  if [ -f "$here/../bin/yourgeeky" ]; then
+    src="$(cd "$here/.." && pwd)"
   fi
 fi
 
