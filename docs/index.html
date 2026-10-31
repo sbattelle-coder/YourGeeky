@@ -75,7 +75,7 @@
   .panel { border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
   .chat { background: var(--surface); border: 1px solid var(--border); }
   .panel-head { padding: 11px 16px; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); }
-  .chat-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 560px; }
+  .chat-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 740px; }
   .msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 15.5px; line-height: 1.45; }
   .msg b { display: block; font-size: 12px; margin-bottom: 2px; opacity: .75; }
   .msg.you { align-self: flex-end; background: var(--accent); color: var(--accent-text); border-bottom-right-radius: 4px; }
@@ -90,11 +90,24 @@
   .msg .hint { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
   .msg .dim-note { opacity: .8; font-weight: 400; }
   .msg.ask { border-color: var(--accent); }
+  .safety .qa p { margin: 0 0 12px; }
+  .more-btn { display: block; width: fit-content; margin-top: 8px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--accent); border-radius: 999px; cursor: pointer; }
+  .more-btn:hover { background: var(--accent); color: var(--accent-text); }
+  .msg .more { display: block; margin-top: 8px; padding: 8px 10px; font-size: 14px; background: var(--surface); color: var(--text); border-radius: 8px; }
+  .msg .more[hidden] { display: none; }
+  /* Little pictures beside the demo bubbles: the YourGeeky logo, and a speaking face for you. */
+  .msg { position: relative; max-width: min(88%, calc(100% - 44px)); }
+  .msg.yg { margin-left: 40px; }
+  .msg.you { margin-right: 40px; }
+  .msg.yg::before, .msg.you::after { content: ""; position: absolute; bottom: 0; width: 30px; height: 30px; background: center / contain no-repeat; }
+  .msg.yg::before { left: -40px; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%232f5bd3'/><path d='M8 11l5 5-5 5' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/><path d='M16 22h8' stroke='white' stroke-width='3' stroke-linecap='round'/></svg>"); }
+  .msg.you::after { right: -40px; background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23e8edfb'/><path d='M17 5.5C22.5 5.5 26.5 9.5 26.5 15C26.5 19 24.5 21.5 22.5 23L22.5 28.5L15 28.5L15 25.2C13.2 25.2 12 24.3 12 22.8L12 21.3L10.8 20.6L12 19.6L11.8 18.6L9.6 16.8L12 13C12.2 8.5 14 5.5 17 5.5Z' fill='%232f5bd3'/><path d='M7.3 17.6L4.6 16.2M7 19.9L3.8 19.9M7.3 22.2L4.6 23.6' stroke='%232f5bd3' stroke-width='1.5' stroke-linecap='round'/></svg>"); }
+  .msg.you.key::after { background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%23e8edfb'/><path d='M17 5.5C22.5 5.5 26.5 9.5 26.5 15C26.5 19 24.5 21.5 22.5 23L22.5 28.5L15 28.5L15 25.2C13.2 25.2 12 24.3 12 22.8L12 21.3L10.8 20.6L12 19.6L11.8 18.6L9.6 16.8L12 13C12.2 8.5 14 5.5 17 5.5Z' fill='%232f5bd3'/></svg>"); }
   .term .wait { color: #f2c46d; }
   .demo .term { border-radius: 14px; }
   .demo .term .bar { margin-bottom: 14px; align-items: center; }
   .demo .term .bar em { transform: none; margin: 0 0 0 10px; font-size: 12px; }
-  .demo .term-body { min-height: 400px; font-size: 13.5px; }
+  .demo .term-body { min-height: 400px; font-size: 13.5px; overflow-wrap: anywhere; }
   .demo-note { margin: 16px 0 0; color: var(--muted); max-width: 720px; }
   .demo-section { border-top: 0; padding-top: 0; }
   .badge { display: inline-flex; align-items: center; gap: 8px; align-self: start; justify-self: start; margin-bottom: 18px; padding: 7px 14px;
@@ -160,7 +173,7 @@
     h1 { font-size: 34px; } .lead { font-size: 18px; }
     .steps, .grid, .free-grid { grid-template-columns: 1fr; }
     .demo { grid-template-columns: 1fr; }
-    .chat-body { min-height: 600px; }
+    .chat-body { min-height: 810px; }
     .demo .term-body { min-height: 260px; }
     nav { display: none; }
     .wrap { padding: 0 16px; }
@@ -209,6 +222,16 @@
           <li><strong>It has built-in safety rules.</strong> It never deletes files outside a folder you choose. It won't run anything it can't explain in one sentence. If instructions you paste look risky, it stops and tells you why.</li>
           <li><strong>It's easy to remove.</strong> Ask YourGeeky to uninstall itself, or delete the hidden <code>.yourgeeky</code> folder in your home folder.</li>
         </ul>
+        <h3>How do I know YourGeeky won't do something bad?</h3>
+        <div class="qa">
+        <p>It's a fair question to ask about anything that works on your computer. Here's the honest answer.</p>
+        <p><strong>You approve every change.</strong> YourGeeky can look things up on its own, like checking whether Python is installed. But before it changes anything, it stops, shows you the exact command, and waits for your Yes. If you never say yes, nothing changes.</p>
+        <p><strong>There's nothing hidden.</strong> YourGeeky itself is just a few plain text files, including the plain-English instructions it gives the AI. Anyone can <a href="https://github.com/sbattelle-coder/YourGeeky/blob/main/prompts/guide.md" target="_blank" rel="noopener">read those instructions</a> on GitHub, and people who know computers can check that it does what this page says.</p>
+        <p><strong>It only works while you're using it.</strong> It doesn't run in the background, start up on its own, or keep watching your computer. When you close the Terminal window, it stops.</p>
+        <p><strong>We don't collect anything.</strong> YourGeeky has no ads, no tracking and no account with us. It never sends your conversations to us.</p>
+        <p><strong>The AI comes from companies you've heard of.</strong> The thinking is done by Google's or Anthropic's AI, which have their own safety rules on top of ours.</p>
+        <p><strong>And the honest part:</strong> no software is perfect, and AI can misunderstand. That's why the final say is always yours. If a step doesn't make sense, say no, or ask "why?", and it will explain before doing anything.</p>
+        </div>
         <h3>Good to know</h3>
         <ul>
           <li>To understand your request, what you type or say (and the results of the commands it runs) is sent to the AI you chose, Google or Anthropic, under their privacy terms. Don't share passwords or private information in the chat.</li>
@@ -245,10 +268,10 @@
       <div class="panel-head">The conversation: what you type and what YourGeeky says</div>
       <div class="chat-body" id="chat">
         <div class="msg you"><b>You <span class="spoken">🎤 spoken</span></b>install Python</div>
-        <div class="msg yg"><b>YourGeeky</b>You want Python on your Mac. I'll check whether you have it, install it, and make sure it works.</div>
-        <div class="msg yg ask"><b>YourGeeky</b>You don't have it yet. I'd like to install Python with Homebrew. Your Mac may ask for your password.<span class="q">Okay to go ahead?</span><span class="choices"><span class="choice yes pressed">❯ 1. Yes</span><span class="choice">&nbsp; 2. No</span></span><span class="hint">Press Return for Yes, or choose No</span></div>
-        <div class="msg you"><b>You</b>⏎ Return <span class="dim-note">(Yes, install it)</span></div>
-        <div class="msg yg"><b>YourGeeky</b>Done! Python 3.13 is installed. Type python3 to start it.</div>
+        <div class="msg yg"><b>YourGeeky</b>You want Python on your Mac. I'll check whether you have it, install it, and make sure it works.<button class="more-btn" type="button" aria-expanded="false">More info</button><span class="more" hidden>Python is a free programming language. Lots of apps, classes and tutorials need it, and Macs don't come with an up-to-date version.</span></div>
+        <div class="msg yg ask"><b>YourGeeky</b>You don't have Python yet, or Homebrew. You need Homebrew to install Python. It's a free tool most Macs use to install things. I'd like to install Homebrew first, then Python. Your Mac will ask for your password.<span class="q">Okay to go ahead?</span><span class="choices"><span class="choice yes pressed">❯ 1. Yes</span><span class="choice">&nbsp; 2. No</span></span><span class="hint">Press Return for Yes, or choose No</span><button class="more-btn" type="button" aria-expanded="false">More info</button><span class="more" hidden>Homebrew is like an app store for Terminal tools. It's free, used by millions of Mac owners, and it turns installing things like Python into one simple command. Your Mac asks for your password because Homebrew adds files to a protected part of the system. You type it yourself, and it isn't shown on screen.</span></div>
+        <div class="msg you key"><b>You</b>⏎ Return <span class="dim-note">(Yes, install both)</span></div>
+        <div class="msg yg"><b>YourGeeky</b>Done! Python 3.13 is installed. Type python3 to start it.<button class="more-btn" type="button" aria-expanded="false">More info</button><span class="more" hidden>To use Python, type python3 and press Return. To leave Python, type exit() and press Return.</span></div>
       </div>
     </div>
     <div class="panel term">
@@ -256,7 +279,11 @@
       <div class="term-body" id="term">
         <p><span class="ok">$</span> python3 --version</p>
         <p class="dim">zsh: command not found: python3</p>
+        <p><span class="ok">$</span> brew --version</p>
+        <p class="dim">zsh: command not found: brew</p>
         <p class="ok">✓ You said yes. Going ahead.</p>
+        <p><span class="ok">$</span> /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</p>
+        <p class="dim">Password: (you type it, nothing shows)<br>==&gt; Installing Command Line Tools for Xcode<br>==&gt; Installation successful!</p>
         <p><span class="ok">$</span> brew install python</p>
         <p class="dim">==&gt; Downloading python@3.13<br>==&gt; Pouring python@3.13<br>python@3.13 is installed</p>
         <p><span class="ok">$</span> python3 --version</p>
@@ -426,6 +453,17 @@
   });
 </script>
 <script>
+  // "More info" buttons on YourGeeky's demo replies open a short plain-English explanation.
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('.more-btn');
+    if (!b) return;
+    var box = b.nextElementSibling, open = box.hidden;
+    box.hidden = !open;
+    b.setAttribute('aria-expanded', String(open));
+    b.textContent = open ? 'Less info' : 'More info';
+  });
+</script>
+<script>
   // Homepage demo: the chat on the left and the commands YourGeeky runs on the
   // right play out together. The static example stays when motion is reduced.
   (function () {
@@ -433,24 +471,27 @@
     if (!chat || !term || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
     var SCENES = [
       [['you', 'install Python'],
-       ['yg', "You want Python on your Mac. I'll check whether you have it, install it, and make sure it works."],
+       ['yg', "You want Python on your Mac. I'll check whether you have it, install it, and make sure it works.", 'Python is a free programming language. Lots of apps, classes and tutorials need it, and Macs don\'t come with an up-to-date version.'],
        ['cmd', 'python3 --version', ['zsh: command not found: python3']],
-       ['ask', "You don't have it yet. I'd like to install Python with Homebrew. Your Mac may ask for your password.", 'Yes, install it'],
+       ['cmd', 'brew --version', ['zsh: command not found: brew']],
+       ['ask', "You don't have Python yet, or Homebrew. You need Homebrew to install Python. It's a free tool most Macs use to install things. I'd like to install Homebrew first, then Python. Your Mac will ask for your password.", 'Yes, install both', 'Homebrew is like an app store for Terminal tools. It\'s free, used by millions of Mac owners, and it turns installing things like Python into one simple command. Your Mac asks for your password because Homebrew adds files to a protected part of the system. You type it yourself, and it isn\'t shown on screen.'],
+       ['cmd', '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"', ['Password: (you type it, nothing shows)', '==> Installing Command Line Tools for Xcode', '==> Installation successful!']],
+       ['yg', 'Homebrew is installed. Now Python.', 'You only install Homebrew once. Next time you need a tool, YourGeeky can use it straight away.'],
        ['cmd', 'brew install python', ['==> Downloading python@3.13', '==> Pouring python@3.13', 'python@3.13 is installed']],
        ['cmd', 'python3 --version', ['Python 3.13.1']],
-       ['yg', 'Done! Python 3.13 is installed. Type python3 to start it.']],
+       ['yg', 'Done! Python 3.13 is installed. Type python3 to start it.', 'To use Python, type python3 and press Return. To leave Python, type exit() and press Return.']],
       [['you', 'it says command not found when I type node'],
-       ['yg', 'Let me find out why.'],
+       ['yg', 'Let me find out why.', '"Command not found" means Terminal can\'t find that program. Either it isn\'t installed, or Terminal doesn\'t know which folder it\'s in.'],
        ['cmd', 'which node', ['node not found']],
        ['cmd', 'ls /opt/homebrew/bin/node', ['/opt/homebrew/bin/node']],
-       ['ask', "Node is installed, but your Terminal doesn't know where to look. I'd like to add one line to your Terminal settings.", 'Yes, fix it'],
+       ['ask', "Node is installed, but your Terminal doesn't know where to look. I'd like to add one line to your Terminal settings.", 'Yes, fix it', 'Your Terminal keeps a list of folders to look in for programs, called the PATH. This adds Homebrew\'s folder to that list. It\'s one line in a settings file, and it can be taken out later.'],
        ['cmd', "echo 'export PATH=\"/opt/homebrew/bin:$PATH\"' >> ~/.zshrc", []],
-       ['yg', 'Fixed. Open a new Terminal window and node will work.']],
+       ['yg', 'Fixed. Open a new Terminal window and node will work.', 'Terminal reads its settings when a window opens, so the change only applies to new windows.']],
       [['you', 'where did my download go?'],
        ['cmd', 'ls -t ~/Downloads | head -3', ['budget-2026.xlsx', 'holiday-photo.jpg', 'invoice.pdf']],
-       ['ask', 'Your newest download is budget-2026.xlsx, in your Downloads folder. Want me to open the folder in Finder?', 'Yes, open it'],
+       ['ask', 'Your newest download is budget-2026.xlsx, in your Downloads folder. Want me to open the folder in Finder?', 'Yes, open it', 'The command ls lists the files in a folder. Adding -t sorts them newest first, so the top one is your latest download.'],
        ['cmd', 'open ~/Downloads', []],
-       ['yg', "Done. It's open in Finder."]]
+       ['yg', "Done. It's open in Finder.", 'open is the Terminal\'s way of double-clicking. It opens a file or folder in the app that normally handles it.']]
     ];
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
     var esc = function (t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
@@ -471,6 +512,9 @@
         })();
       });
     };
+    var more = function (info) {
+      return info ? '<button class="more-btn" type="button" aria-expanded="false">More info</button><span class="more" hidden>' + esc(info) + '</span>' : '';
+    };
     var step = function (s) {
       if (s[0] === 'you') {
         var d = bubble('you', '');
@@ -481,7 +525,7 @@
         // A confirm: YourGeeky asks, the Terminal waits, the person taps Yes.
         var q = bubble('yg ask', esc(s[1]) + '<span class="q">Okay to go ahead?</span>' +
           '<span class="choices"><span class="choice yes">❯ 1. Yes</span><span class="choice">&nbsp; 2. No</span></span>' +
-          '<span class="hint">Press Return for Yes, or choose No</span>');
+          '<span class="hint">Press Return for Yes, or choose No</span>' + more(s[3]));
         var w = document.createElement('p');
         w.className = 'wait fade';
         w.textContent = '⏸ Waiting for your OK...';
@@ -500,7 +544,7 @@
         var t = bubble('yg typing', '<span></span><span></span><span></span>');
         return wait(900).then(function () {
           t.className = 'msg yg';
-          t.innerHTML = '<b>YourGeeky</b>' + esc(s[1]);
+          t.innerHTML = '<b>YourGeeky</b>' + esc(s[1]) + more(s[2]);
           return wait(1600);
         });
       }
@@ -523,6 +567,10 @@
       chat.innerHTML = ''; term.innerHTML = '';
       SCENES[i].reduce(function (c, s) { return c.then(function () { return step(s); }); }, wait(400))
         .then(function () { return wait(4000); })
+        .then(function untilClosed() {
+          // Keep the scene on screen while someone is reading a "More info" box.
+          return chat.querySelector('.more:not([hidden])') ? wait(500).then(untilClosed) : null;
+        })
         .then(function () { play((i + 1) % SCENES.length); });
     };
     play(0);
