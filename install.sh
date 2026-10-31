@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # Installs YourGeeky into ~/.yourgeeky, puts the yourgeeky command on your PATH,
-# and sets up Claude Code if it is not already installed.
+# and sets up the AI it uses: Google's free Antigravity CLI, or Claude Code for
+# people with a paid Claude plan.
 #
 #   curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash
 #
@@ -51,17 +52,46 @@ case ":$PATH:" in
     ;;
 esac
 
-# Set up Claude Code, which YourGeeky uses to do its work.
-if [ -z "${YOURGEEKY_SKIP_CLAUDE:-}" ]; then
-  if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
-    say "Claude Code is already set up."
-  else
+# Choose and set up the AI that YourGeeky uses. Google's is free; Claude Code
+# needs a paid Claude plan.
+engine="${YOURGEEKY_ENGINE:-}"
+if [ -z "$engine" ]; then
+  engine="google"
+  if [ -r /dev/tty ] && { : < /dev/tty; } 2>/dev/null; then
     say ""
-    say "Setting up Claude Code (the AI assistant from Anthropic that YourGeeky uses)..."
-    curl -fsSL https://claude.ai/install.sh | bash
+    say "YourGeeky can use Google's free AI, or Claude Code if you already pay for a Claude plan."
+    printf 'Do you have a paid Claude plan (Pro or Max)? Most people answer n. [y/n] '
+    answer=""
+    read -r answer < /dev/tty || true
+    case "$answer" in [Yy]*) engine="claude" ;; esac
+  fi
+fi
+printf '%s\n' "$engine" > "$INSTALL_DIR/engine"
+
+if [ -z "${YOURGEEKY_SKIP_ENGINE:-}" ]; then
+  if [ "$engine" = "claude" ]; then
+    if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
+      say "Claude Code is already set up."
+    else
+      say ""
+      say "Setting up Claude Code (the AI assistant from Anthropic)..."
+      curl -fsSL https://claude.ai/install.sh | bash
+    fi
+  else
+    if command -v agy >/dev/null 2>&1 || [ -x "$HOME/.local/bin/agy" ]; then
+      say "Google's AI is already set up."
+    else
+      say ""
+      say "Setting up Google's free AI (Antigravity CLI)..."
+      curl -fsSL https://antigravity.google/cli/install.sh | bash
+    fi
   fi
 fi
 
 say ""
 say "All set. To start, type:  yourgeeky"
-say "The first time, Claude Code will ask you to sign in to your Claude account."
+if [ "$engine" = "claude" ]; then
+  say "The first time, you'll be asked to sign in to your Claude account."
+else
+  say "The first time, you'll be asked to sign in with your Google account. It's free."
+fi

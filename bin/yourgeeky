@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
 # YourGeeky: a friendly helper for people who have to use the Terminal.
-# Starts Claude Code with plain-English guidance and safety rules.
+# Starts an AI assistant (Google's free Antigravity CLI, or Claude Code) with
+# plain-English guidance and safety rules.
 # Written for the bash 3.2 that ships with macOS.
 
 set -euo pipefail
 
-VERSION="0.1.0"
+VERSION="0.2.0"
 
 # Find the real install folder, even when this script is run through a symlink.
 resolve_home() {
@@ -21,7 +22,9 @@ resolve_home() {
 
 YG_HOME="$(resolve_home)"
 GUIDE="$YG_HOME/prompts/guide.md"
+ENGINE_FILE="${YOURGEEKY_ENGINE_FILE:-$YG_HOME/engine}"
 CLAUDE_BIN="${YOURGEEKY_CLAUDE:-claude}"
+AGY_BIN="${YOURGEEKY_AGY:-agy}"
 
 say() { printf '%s\n' "$*"; }
 
@@ -33,6 +36,10 @@ How to use it:
   yourgeeky                      Start a conversation
   yourgeeky "install Python"     Start with a request
   yourgeeky --show-commands      Also show the real commands, so you can learn them
+
+Choosing the AI:
+  yourgeeky --use google         Use Google's free AI (the default)
+  yourgeeky --use claude         Use Claude Code (needs a paid Claude plan)
 
 Other options:
   --help       Show this message
@@ -47,19 +54,36 @@ ask_yes_no() {
   case "$answer" in [Yy]*) return 0 ;; *) return 1 ;; esac
 }
 
-ensure_claude() {
-  if command -v "$CLAUDE_BIN" >/dev/null 2>&1; then
+current_engine() {
+  local engine="google"
+  if [ -f "$ENGINE_FILE" ]; then
+    engine="$(tr -d '[:space:]' < "$ENGINE_FILE")"
+  fi
+  case "$engine" in claude) say claude ;; *) say google ;; esac
+}
+
+# Make sure the chosen AI tool is installed, offering to install it if not.
+ensure_engine() {
+  local name bin url plan
+  if [ "$1" = "claude" ]; then
+    name="Claude Code"; bin="$CLAUDE_BIN"; url="https://claude.ai/install.sh"
+    plan="You'll need a paid Claude plan to sign in afterwards."
+  else
+    name="Google's free AI (Antigravity CLI)"; bin="$AGY_BIN"; url="https://antigravity.google/cli/install.sh"
+    plan="You'll sign in with a free Google account afterwards."
+  fi
+  if command -v "$bin" >/dev/null 2>&1; then
     return 0
   fi
   say ""
-  say "YourGeeky uses Claude Code to do its work, and it isn't installed yet."
-  say "Installing it takes about a minute. You'll need a Claude account to sign in afterwards."
+  say "YourGeeky uses $name to do its work, and it isn't installed yet."
+  say "Installing it takes about a minute. $plan"
   say ""
-  if ask_yes_no "Install Claude Code now?"; then
-    curl -fsSL https://claude.ai/install.sh | bash
+  if ask_yes_no "Install it now?"; then
+    curl -fsSL "$url" | bash
     export PATH="$HOME/.local/bin:$PATH"
-    if ! command -v "$CLAUDE_BIN" >/dev/null 2>&1; then
-      say "Claude Code was installed, but this window can't find it yet."
+    if ! command -v "$bin" >/dev/null 2>&1; then
+      say "It was installed, but this window can't find it yet."
       say "Close this Terminal window, open a new one, and type: yourgeeky"
       exit 1
     fi
@@ -84,18 +108,36 @@ build_prompt() {
 main() {
   local commands="hide"
   local request=""
+  local use=""
 
   while [ $# -gt 0 ]; do
     case "$1" in
       -h|--help) usage; exit 0 ;;
       -v|--version) say "yourgeeky $VERSION"; exit 0 ;;
       --show-commands) commands="show" ;;
+      --use)
+        shift
+        case "${1:-}" in
+          google|claude) use="$1" ;;
+          *) say "Please choose google or claude, for example: yourgeeky --use google"; exit 2 ;;
+        esac
+        ;;
       --) shift; request="$*"; break ;;
       -*) say "I don't recognise the option $1."; say ""; usage; exit 2 ;;
       *) request="${request:+$request }$1" ;;
     esac
     shift
   done
+
+  if [ -n "$use" ]; then
+    printf '%s\n' "$use" > "$ENGINE_FILE"
+    if [ "$use" = "claude" ]; then
+      say "Okay, YourGeeky will use Claude Code from now on."
+    else
+      say "Okay, YourGeeky will use Google's free AI from now on."
+    fi
+    [ -z "$request" ] && [ "$commands" = "hide" ] && exit 0
+  fi
 
   if [ "$(uname -s)" != "Darwin" ] && [ -z "${YOURGEEKY_ALLOW_ANY_OS:-}" ]; then
     say "This version of YourGeeky is made for Mac. Support for other computers is coming later."
@@ -107,7 +149,9 @@ main() {
     exit 1
   fi
 
-  ensure_claude
+  local engine
+  engine="$(current_engine)"
+  ensure_engine "$engine"
 
   say "Hi, I'm YourGeeky. Tell me what you need in plain words, like \"install Python\"."
   say "I'll explain each step and ask before changing anything. Type /exit to leave."
@@ -115,11 +159,31 @@ main() {
 
   local prompt
   prompt="$(build_prompt "$commands")"
-  if [ -n "$request" ]; then
-    exec "$CLAUDE_BIN" --append-system-prompt "$prompt" "$request"
-  else
-    exec "$CLAUDE_BIN" --append-system-prompt "$prompt"
+  if [ "$engine" = "claude" ]; then
+    if [ -n "$request" ]; then
+      exec "$CLAUDE_BIN" --append-system-prompt "$prompt" "$request"
+    else
+      exec "$CLAUDE_BIN" --append-system-prompt "$prompt"
+    fi
   fi
+
+  # Antigravity CLI has no system prompt option, so the guide goes in as the
+  # opening message of the conversation.
+  local opening
+  if [ -n "$request" ]; then
+    opening="$prompt
+
+---
+
+Follow the guide above for this whole conversation. The person's first request is: $request"
+  else
+    opening="$prompt
+
+---
+
+Follow the guide above for this whole conversation. Start by greeting the person in one short sentence and asking what they need help with."
+  fi
+  exec "$AGY_BIN" -i "$opening"
 }
 
 main "$@"
