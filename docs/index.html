@@ -4,6 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>YourGeeky: the Terminal, in plain English</title>
+<meta name="robots" content="noindex">
+<script>
+  // Preview password screen. Remove this script and the #gate block when the site goes public.
+  try { if (localStorage.getItem("yg-preview") !== "ok") document.documentElement.classList.add("locked"); }
+  catch (e) { document.documentElement.classList.add("locked"); }
+</script>
 <meta name="description" content="YourGeeky is a friendly helper for people who have to use the Mac Terminal. Say what you need in plain words, and it explains each step and asks before changing anything.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%232f5bd3'/%3E%3Cpath d='M8 11l5 5-5 5' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath d='M16 22h8' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
 <style>
@@ -29,6 +35,7 @@
   .hero > * { min-width: 0; }
   h1 { font-size: 46px; line-height: 1.1; margin: 0 0 18px; letter-spacing: -0.02em; }
   .lead { font-size: 20px; color: var(--muted); margin: 0 0 28px; }
+  .powered { margin: -12px 0 24px; font-size: 15px; color: var(--muted); }
   .install { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
   .install p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
   .cmd { display: flex; gap: 8px; align-items: stretch; }
@@ -60,6 +67,25 @@
   details { border-bottom: 1px solid var(--border); padding: 14px 0; }
   summary { cursor: pointer; font-weight: 600; font-size: 18px; }
   details p { color: var(--muted); margin: 10px 0 0; }
+  #gate { display: none; }
+  html.locked body { overflow: hidden; }
+  html.locked #gate { display: flex; position: fixed; inset: 0; z-index: 10; background: var(--bg);
+    align-items: center; justify-content: center; padding: 16px; }
+  #gate form { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px;
+    width: 100%; max-width: 380px; }
+  #gate h2 { font-size: 22px; margin: 0 0 6px; }
+  #gate p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+  input, select, textarea { width: 100%; font: inherit; color: var(--text); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; }
+  input:focus, select:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  button.primary { margin-top: 12px; background: var(--accent); color: var(--accent-text); border: 0; border-radius: 8px;
+    padding: 11px 20px; font: 600 16px/1 inherit; font-family: inherit; cursor: pointer; }
+  .error { color: #c2410c; font-size: 14px; min-height: 20px; margin-top: 8px; }
+  .suggest { max-width: 620px; display: grid; gap: 14px; }
+  .suggest label { display: grid; gap: 6px; font-weight: 600; font-size: 15px; }
+  .suggest .hint { font-weight: 400; color: var(--muted); }
+  .status { min-height: 24px; font-size: 15px; }
+  .hp { position: absolute; left: -9999px; }
   footer { padding: 32px 0 48px; color: var(--muted); font-size: 14px; border-top: 1px solid var(--border); }
   @media (max-width: 760px) {
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
@@ -71,19 +97,29 @@
 </style>
 </head>
 <body>
+<div id="gate">
+  <form id="gate-form">
+    <h2>YourGeeky preview</h2>
+    <p>This site is being reviewed. Please enter the preview password.</p>
+    <input id="gate-pw" type="password" autocomplete="current-password" aria-label="Preview password" required>
+    <button class="primary" type="submit">Enter</button>
+    <div class="error" id="gate-error" role="alert"></div>
+  </form>
+</div>
 <div class="wrap">
   <header class="top">
     <a class="logo" href="/">
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
       YourGeeky
     </a>
-    <nav><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a></nav>
+    <nav><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
   </header>
 
   <div class="hero">
     <div>
       <h1>The Terminal, in plain English.</h1>
       <p class="lead">Someone told you to "just open Terminal and run this"? YourGeeky does it with you. Say what you need in your own words. It explains each step and asks before changing anything.</p>
+      <p class="powered">Works with <strong>Claude Code</strong>, the AI assistant from Anthropic. YourGeeky sets it up for you and makes it beginner friendly.</p>
       <div class="install" id="install">
         <p>To install, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
         <div class="cmd">
@@ -109,7 +145,7 @@
   <ol class="steps">
     <li><h3>Say what you need</h3><p>"Install Python." "What does this error mean?" "Run these steps from the guide." No special words needed.</p></li>
     <li><h3>See the plan</h3><p>YourGeeky says back what it heard and lists the steps in plain words before it does anything.</p></li>
-    <li><h3>Say yes, and it's done</h3><p>It asks before anything risky, does the work, and checks that it worked.</p></li>
+    <li><h3>Say yes, and it's done</h3><p>Claude Code does the work behind the scenes, then YourGeeky checks that it worked.</p></li>
   </ol>
 </div></section>
 
@@ -143,10 +179,35 @@
 <section id="faq"><div class="wrap">
   <h2>Questions</h2>
   <details><summary>Do I need to know anything about computers?</summary><p>No. If you can type a sentence, you can use YourGeeky.</p></details>
-  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky uses Claude Code to do its work, and offers to install it the first time you start.</p></details>
+  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky works with Claude Code, the AI assistant from Anthropic, to do its work. If you don't have Claude Code yet, YourGeeky offers to install it the first time you start.</p></details>
+  <details><summary>How is this different from using Claude Code on its own?</summary><p>Claude Code is built for programmers. YourGeeky gives it plain-English instructions, safety rules, and step-by-step explanations made for people who have never used the Terminal.</p></details>
   <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. To leave, type <code>/exit</code>.</p></details>
   <details><summary>Does it work on Windows?</summary><p>Not yet. The first version is for Mac.</p></details>
   <details><summary>Is it safe?</summary><p>It asks before anything that changes your computer, and you can always say no. Nothing happens without your yes.</p></details>
+</div></section>
+
+<section id="suggest"><div class="wrap">
+  <h2>Suggestions and requests</h2>
+  <p style="color:var(--muted);margin:-8px 0 24px">Is there something you wish YourGeeky could help with, or something that confused you? Tell us.</p>
+  <form class="suggest" id="suggest-form">
+    <label>What kind of note is this?
+      <select name="type">
+        <option>Something I'd like it to help with</option>
+        <option>Something that confused me</option>
+        <option>Something that went wrong</option>
+        <option>Other</option>
+      </select>
+    </label>
+    <label>Your message
+      <textarea name="message" rows="5" required></textarea>
+    </label>
+    <label>Your email <span class="hint">(optional, only if you'd like a reply)</span>
+      <input name="email" type="email" autocomplete="email">
+    </label>
+    <input class="hp" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <div><button class="primary" type="submit">Send</button></div>
+    <div class="status" id="suggest-status" role="status"></div>
+  </form>
 </div></section>
 
 <div class="wrap"><footer>© 2026 YourGeeky</footer></div>
@@ -156,6 +217,42 @@
     var btn = this, text = document.getElementById('cmd').textContent;
     var done = function () { btn.textContent = 'Copied'; setTimeout(function () { btn.textContent = 'Copy'; }, 2000); };
     if (navigator.clipboard) { navigator.clipboard.writeText(text).then(done, function () {}); }
+  });
+</script>
+<script>
+  // Preview password check. Not real security: it only keeps casual visitors out during review.
+  var GATE_HASH = 'dfc90173e976f23daaa77588acef6a7072a9a5c21b24e8578ce32ba5bd71d51d';
+  document.getElementById('gate-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var pw = document.getElementById('gate-pw').value;
+    crypto.subtle.digest('SHA-256', new TextEncoder().encode(pw)).then(function (buf) {
+      var hex = Array.prototype.map.call(new Uint8Array(buf), function (b) { return ('0' + b.toString(16)).slice(-2); }).join('');
+      if (hex === GATE_HASH) {
+        try { localStorage.setItem('yg-preview', 'ok'); } catch (err) {}
+        document.documentElement.classList.remove('locked');
+      } else {
+        document.getElementById('gate-error').textContent = "That password isn't right. Please try again.";
+      }
+    });
+  });
+
+  // Suggestions form, delivered by email through Web3Forms.
+  var WEB3FORMS_KEY = 'YOUR_WEB3FORMS_ACCESS_KEY';
+  document.getElementById('suggest-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    var form = this, status = document.getElementById('suggest-status');
+    var data = new FormData(form);
+    data.append('access_key', WEB3FORMS_KEY);
+    data.append('subject', 'YourGeeky suggestion: ' + data.get('type'));
+    data.append('from_name', 'yourgeeky.com');
+    status.textContent = 'Sending...';
+    fetch('https://api.web3forms.com/submit', { method: 'POST', body: data })
+      .then(function (r) { return r.json(); })
+      .then(function (res) {
+        if (res.success) { form.reset(); status.textContent = 'Thank you! We got your note.'; }
+        else { status.textContent = "Sorry, that didn't send. Please try again later."; }
+      })
+      .catch(function () { status.textContent = "Sorry, that didn't send. Please check your connection and try again."; });
   });
 </script>
 </body>
