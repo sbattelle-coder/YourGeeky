@@ -34,7 +34,7 @@ check "placeholder replaced" '! grep -q "COMMANDS_MODE" "$TMP/args"'
 check "--show-commands shows commands" 'grep -q "Show each command" "$TMP/args"'
 
 # Installer, from this checkout into a temp home.
-HOME="$TMP/home" PATH="/usr/bin:/bin" YOURGEEKY_DIR="$TMP/home/.yourgeeky" \
+HOME="$TMP/home" PATH="/usr/bin:/bin" YOURGEEKY_SKIP_CLAUDE=1 YOURGEEKY_DIR="$TMP/home/.yourgeeky" \
   YOURGEEKY_BIN_DIR="$TMP/home/.local/bin" bash "$ROOT/install.sh" >/dev/null
 check "installer links the command" '[ -L "$TMP/home/.local/bin/yourgeeky" ]'
 check "installer adds PATH to .zshrc" 'grep -q ".local/bin" "$TMP/home/.zshrc"'

@@ -37,6 +37,7 @@
   .lead { font-size: 20px; color: var(--muted); margin: 0 0 28px; }
   .powered { margin: -12px 0 24px; font-size: 15px; color: var(--muted); }
   .install { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .install p.after { margin: 12px 0 0; font-size: 14px; }
   .install p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
   .cmd { display: flex; gap: 8px; align-items: stretch; }
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; background: var(--term-bg); color: var(--term-text);
@@ -127,13 +128,14 @@
     <div>
       <h1>The Terminal, in plain English.</h1>
       <p class="lead">Someone told you to "just open Terminal and run this"? YourGeeky does it with you. Say what you need in your own words. It explains each step and asks before changing anything.</p>
-      <p class="powered">Works with <strong>Claude Code</strong>, the AI assistant from Anthropic. YourGeeky sets it up for you and makes it beginner friendly.</p>
+      <p class="powered">YourGeeky runs on <strong>Claude Code</strong>, the AI assistant from Anthropic. The line below sets up both for you.</p>
       <div class="install" id="install">
-        <p>To install, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
+        <p><strong>To set up Claude Code and YourGeeky</strong>, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
         <div class="cmd">
           <code id="cmd">curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash</code>
           <button class="copy" id="copy" type="button">Copy</button>
         </div>
+        <p class="after">It installs Claude Code (if you don't have it yet) and YourGeeky. Then type <code>yourgeeky</code> and sign in to your Claude account when asked. Claude Code is free to install, but you need a paid Claude plan to use it (Pro starts at $20 a month).</p>
       </div>
     </div>
     <div class="term">
@@ -189,7 +191,8 @@
 <section id="faq"><div class="wrap">
   <h2>Questions</h2>
   <details><summary>Do I need to know anything about computers?</summary><p>No. If you can type a sentence, you can use YourGeeky.</p></details>
-  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky works with Claude Code, the AI assistant from Anthropic, to do its work. If you don't have Claude Code yet, YourGeeky offers to install it the first time you start.</p></details>
+  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky works with Claude Code, the AI assistant from Anthropic, to do its work. The install line sets up Claude Code for you.</p></details>
+  <details><summary>Is it free?</summary><p>YourGeeky is free. Claude Code is free to install, but using it needs a paid Claude plan from Anthropic. The Pro plan starts at $20 a month, and you can sign up at claude.ai.</p></details>
   <details><summary>How is this different from using Claude Code on its own?</summary><p>Claude Code is built for programmers. YourGeeky gives it plain-English instructions, safety rules, and step-by-step explanations made for people who have never used the Terminal.</p></details>
   <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. To leave, type <code>/exit</code>.</p></details>
   <details><summary>Does it work on Windows?</summary><p>Not yet. The first version is for Mac.</p></details>

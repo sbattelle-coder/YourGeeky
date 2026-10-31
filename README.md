@@ -14,8 +14,9 @@ Open the Terminal app, paste this line, and press Return:
 curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash
 ```
 
-The first time you run YourGeeky, it offers to install Claude Code if you don't have it.
-You'll need a Claude account to sign in.
+This sets up Claude Code (if you don't have it yet) and YourGeeky. Then type `yourgeeky`
+and sign in to your Claude account when asked. Claude Code is free to install, but using it
+needs a paid Claude plan.
 
 ## Use
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-# Installs YourGeeky into ~/.yourgeeky and puts the yourgeeky command on your PATH.
+# Installs YourGeeky into ~/.yourgeeky, puts the yourgeeky command on your PATH,
+# and sets up Claude Code if it is not already installed.
 #
 #   curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash
 #
@@ -50,5 +51,17 @@ case ":$PATH:" in
     ;;
 esac
 
+# Set up Claude Code, which YourGeeky uses to do its work.
+if [ -z "${YOURGEEKY_SKIP_CLAUDE:-}" ]; then
+  if command -v claude >/dev/null 2>&1 || [ -x "$HOME/.local/bin/claude" ]; then
+    say "Claude Code is already set up."
+  else
+    say ""
+    say "Setting up Claude Code (the AI assistant from Anthropic that YourGeeky uses)..."
+    curl -fsSL https://claude.ai/install.sh | bash
+  fi
+fi
+
 say ""
-say "YourGeeky is installed. To start it, type:  yourgeeky"
+say "All set. To start, type:  yourgeeky"
+say "The first time, Claude Code will ask you to sign in to your Claude account."
