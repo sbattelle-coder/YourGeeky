@@ -46,7 +46,3 @@ so nothing runs without the person's say-so.
 ```
 bash tests/run.sh
 ```
-
-## License
-
-MIT. See [LICENSE](LICENSE).
