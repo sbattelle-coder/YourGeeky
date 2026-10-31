@@ -115,6 +115,10 @@
   .safety ol, .safety ul { margin: 0; padding-left: 22px; display: grid; gap: 6px; }
   .safety a { color: var(--accent); }
   .safety p { margin: 0; }
+  .free-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .free h3 { margin: 0 0 8px; font-size: 18px; }
+  .free p { margin: 0; color: var(--muted); }
+  .free a { color: var(--accent); }
   .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .promises li { padding-left: 30px; position: relative; }
   .promises li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
@@ -144,7 +148,7 @@
   @media (max-width: 760px) {
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
     h1 { font-size: 34px; } .lead { font-size: 18px; }
-    .steps, .grid { grid-template-columns: 1fr; }
+    .steps, .grid, .free-grid { grid-template-columns: 1fr; }
     .demo { grid-template-columns: 1fr; }
     .chat-body { min-height: 600px; }
     .demo .term-body { min-height: 260px; }
@@ -169,7 +173,7 @@
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
       YourGeeky
     </a>
-    <nav><a href="#voice">Voice</a><a href="#safety">Safety</a><a href="#ai">Which AI</a><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
+    <nav><a href="#voice">Voice</a><a href="#safety">Safety</a><a href="#free">Why free</a><a href="#ai">Which AI</a><a href="#how">How it works</a><a href="#help">Uses</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
   </header>
 
   <div class="hero">
@@ -301,6 +305,24 @@
   </ul>
 </div></section>
 
+<section id="free" class="free"><div class="wrap">
+  <h2>Free, and open for anyone to check</h2>
+  <div class="free-grid">
+    <div>
+      <h3>Why it's free</h3>
+      <p>Lots of people get told to "just open the Terminal" by a guide, a class, or a coworker, and then get stuck. We built YourGeeky so nobody has to feel locked out of their own computer. Charging for that would put the wall right back up, so YourGeeky is free on Mac, and on Windows when it arrives.</p>
+    </div>
+    <div>
+      <h3>How it stays free</h3>
+      <p>YourGeeky is a small helper that runs on your own Mac, so it costs very little to run. The thinking is done by Google's free AI, or by Claude if you already pay for it. There are no ads. YourGeeky doesn't collect or sell your information, and it doesn't send anything to us.</p>
+    </div>
+    <div>
+      <h3>Nothing hidden</h3>
+      <p>Every line of YourGeeky is public on <a href="https://github.com/sbattelle-coder/YourGeeky">GitHub</a>. Anyone can read it and check exactly what it does: the installer, the tool, and the instructions it gives the AI are all there.</p>
+    </div>
+  </div>
+</div></section>
+
 <section id="faq"><div class="wrap">
   <h2>Questions</h2>
   <details><summary>Can I talk instead of typing?</summary><p>Yes. Once YourGeeky is running, press the microphone key on your keyboard (or press Fn twice) and just say what you need. Your Mac's built-in Dictation types your words in for you, then press Return. Don't worry if it mishears a word. YourGeeky works out what you meant and checks with you if it's not sure. If Dictation is off, turn it on in System Settings, under Keyboard.</p></details>
@@ -308,7 +330,7 @@
   <details><summary>What do I need?</summary><p>A Mac and a free Google account. If you already pay for Claude, you can use that instead. The install line sets up everything else.</p></details>
   <details><summary>Is it free?</summary><p>Yes. YourGeeky is free, and so is Google's AI that it uses by default, up to a daily limit. If you want more, you can switch to Claude Code, which needs a paid Claude plan (Pro starts at $20 a month).</p></details>
   <details><summary>How is this different from using the AI on its own?</summary><p>Google's AI and Claude Code are built for programmers. YourGeeky gives them plain-English instructions, safety rules, and step-by-step explanations made for people who have never used the Terminal.</p></details>
-  <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. Now you're chatting with YourGeeky, so type in plain English. To leave, type <code>/exit</code>. After that, the Terminal is back to normal and only understands commands again.</p></details>
+  <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. Now you're chatting with YourGeeky. Just say what you need: press the microphone key (or Fn twice), speak, then press Return. Or type it in plain English if you prefer. To leave, type <code>/exit</code>. After that, the Terminal is back to normal and only understands commands again.</p></details>
   <details><summary>Does it work on Windows?</summary><p>Not yet. The first version is for Mac.</p></details>
   <details><summary>Is it safe?</summary><p>It asks before anything that changes your computer, and you can always say no. Nothing happens without your yes. See <a href="#safety">Is this safe?</a> for exactly what the install does.</p></details>
 </div></section>
@@ -337,7 +359,7 @@
   </form>
 </div></section>
 
-<div class="wrap"><footer>© 2026 YourGeeky</footer></div>
+<div class="wrap"><footer>© 2026 YourGeeky · <a href="https://github.com/sbattelle-coder/YourGeeky" style="color:inherit">See the code on GitHub</a></footer></div>
 
 <script>
   document.getElementById('copy').addEventListener('click', function () {
