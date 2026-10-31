@@ -91,6 +91,13 @@
   .msg .hint { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
   .msg .dim-note { opacity: .8; font-weight: 400; }
   .msg.ask { border-color: var(--accent); }
+  .top20 { margin-top: 32px; }
+  .top20 h3 { margin: 0 0 4px; font-size: 20px; }
+  .top20 .muted-note { margin: 0 0 14px; color: var(--muted); }
+  .top20 ol { columns: 2; column-gap: 40px; margin: 0; padding-left: 24px; }
+  .top20 li { break-inside: avoid; padding: 4px 0; color: var(--muted); }
+  .top20 li strong { color: var(--text); }
+  @media (max-width: 760px) { .top20 ol { columns: 1; } }
   .safety .qa p { margin: 0 0 12px; }
   .more-btn { display: block; width: fit-content; margin-top: 8px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--accent); border-radius: 999px; cursor: pointer; }
   .more-btn:hover { background: var(--accent); color: var(--accent-text); }
@@ -330,6 +337,32 @@
     <li><h3>Projects people share</h3><p>Got a GitHub link? It downloads it, sets it up, and starts it.</p></li>
     <li><h3>Updating and removing</h3><p>It shows what's installed and cleans up what you don't need.</p></li>
   </ul>
+  <div class="top20">
+    <h3>The 20 things people most often need the Terminal to install</h3>
+    <p class="muted-note">Roughly in order, most common first. YourGeeky can set up any of them. Just say the name.</p>
+    <ol>
+      <li><strong>Homebrew</strong>: the free tool that installs most of the others on this list</li>
+      <li><strong>Apple's Command Line Tools</strong>: the basic building blocks almost everything else needs</li>
+      <li><strong>Python</strong>: for classes, data, automation and many AI tools</li>
+      <li><strong>Git</strong>: downloads code projects and keeps track of changes</li>
+      <li><strong>Node.js and npm</strong>: runs lots of web tools and website projects</li>
+      <li><strong>Python add-ons (pip)</strong>: the extra packages a class or project tells you to get</li>
+      <li><strong>The <code>code</code> command for VS Code</strong>: opens a folder in Visual Studio Code from the Terminal</li>
+      <li><strong>Java</strong>: for Minecraft servers, school courses and some older apps</li>
+      <li><strong>Docker</strong>: runs an app in its own sealed-off box</li>
+      <li><strong>GitHub's command-line tool (gh)</strong>: sign in to GitHub and grab or share projects</li>
+      <li><strong>Anaconda or Miniconda</strong>: a Python setup used in data science courses</li>
+      <li><strong>Jupyter Notebook</strong>: the notebook pages many data and AI classes use</li>
+      <li><strong>FFmpeg</strong>: converts and shrinks video and audio files</li>
+      <li><strong>ImageMagick</strong>: resizes and converts pictures in bulk</li>
+      <li><strong>wget</strong>: downloads files from a web address</li>
+      <li><strong>Ruby and Jekyll</strong>: for building simple websites, including GitHub Pages</li>
+      <li><strong>CocoaPods</strong>: add-ons for people building iPhone apps</li>
+      <li><strong>PostgreSQL or MySQL</strong>: databases that apps and courses ask you to set up</li>
+      <li><strong>Ollama</strong>: runs AI models right on your own Mac</li>
+      <li><strong>Cloud tools (AWS, Google Cloud, Firebase)</strong>: to put a website or app online</li>
+    </ol>
+  </div>
 </div></section>
 
 <section><div class="wrap">
