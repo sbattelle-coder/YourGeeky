@@ -69,6 +69,7 @@
   .steps p, .grid p { margin: 0; color: var(--muted); font-size: 16px; }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 28px; padding: 0; margin: 0; list-style: none; }
   .grid li { padding: 10px 0; }
+  .intro { max-width: 680px; margin: -8px 0 24px; color: var(--muted); font-size: 18px; }
   .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .promises li { padding-left: 30px; position: relative; }
   .promises li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
@@ -121,7 +122,7 @@
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
       YourGeeky
     </a>
-    <nav><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
+    <nav><a href="#claude-code">Claude Code</a><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
   </header>
 
   <div class="hero">
@@ -151,6 +152,18 @@
     </div>
   </div>
 </div>
+
+<section id="claude-code"><div class="wrap">
+  <h2>What is Claude Code?</h2>
+  <p class="intro">Claude Code is an AI assistant made by Anthropic, the company behind Claude. Unlike the Claude you chat with in a browser, it works right inside your Mac's Terminal, so it can actually do things on your computer for you.</p>
+  <ul class="grid">
+    <li><h3>It does the typing for you</h3><p>It works out the right commands and runs them, so you never have to remember them.</p></li>
+    <li><h3>It reads what comes back</h3><p>It sees the results and error messages, and knows what to try next.</p></li>
+    <li><h3>It asks first</h3><p>Before it runs anything, Claude Code asks for your permission. You can always say no.</p></li>
+    <li><h3>It's built for programmers</h3><p>On its own, it talks like a programmer and assumes you know the jargon.</p></li>
+  </ul>
+  <p class="intro" style="margin-top:24px">That last point is where YourGeeky comes in. It gives Claude Code plain-English instructions and extra safety rules, so it explains every step as if you've never opened the Terminal before.</p>
+</div></section>
 
 <section id="how"><div class="wrap">
   <h2>How it works</h2>
