@@ -31,12 +31,13 @@
   .logo svg { width: 28px; height: 28px; }
   nav a { color: var(--muted); text-decoration: none; margin-left: 20px; font-size: 15px; }
   nav a:hover { color: var(--text); }
-  .hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 48px; align-items: center; padding: 48px 0 72px; }
+  .hero { display: grid; grid-template-columns: minmax(0, 720px); padding: 48px 0 64px; }
   .hero > * { min-width: 0; }
   h1 { font-size: 46px; line-height: 1.1; margin: 0 0 18px; letter-spacing: -0.02em; }
   .lead { font-size: 20px; color: var(--muted); margin: 0 0 28px; }
   .powered { margin: -12px 0 24px; font-size: 15px; color: var(--muted); }
   .install { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
+  .install p.after { margin: 12px 0 0; font-size: 14px; }
   .install p { margin: 0 0 10px; font-size: 15px; color: var(--muted); }
   .cmd { display: flex; gap: 8px; align-items: stretch; }
   .cmd code { flex: 1; min-width: 0; overflow-x: auto; white-space: nowrap; background: var(--term-bg); color: var(--term-text);
@@ -47,10 +48,10 @@
   .term { background: var(--term-bg); color: var(--term-text); border-radius: 14px; padding: 0 0 20px;
     font: 14.5px/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; box-shadow: 0 20px 50px rgba(0,0,0,.18); overflow: hidden; }
   .term .bar { display: flex; gap: 7px; padding: 12px 14px; background: rgba(255,255,255,.06); margin-bottom: 14px; }
+  .term .bar em { font-style: normal; color: var(--term-dim); }
   .term .bar span { width: 11px; height: 11px; border-radius: 50%; background: #555a66; }
   .term p { margin: 0 20px 10px; }
   .term .you { color: var(--term-green); }
-  .term-body { min-height: 340px; }
   .term .ok { color: var(--term-green); }
   .term .caret { display: inline-block; width: 8px; height: 1.1em; vertical-align: -0.2em; background: var(--term-green);
     animation: blink 1s steps(1) infinite; }
@@ -68,6 +69,44 @@
   .steps p, .grid p { margin: 0; color: var(--muted); font-size: 16px; }
   .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 28px; padding: 0; margin: 0; list-style: none; }
   .grid li { padding: 10px 0; }
+  .intro { max-width: 680px; margin: -8px 0 24px; color: var(--muted); font-size: 18px; }
+  .demo { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
+  .demo > * { min-width: 0; }
+  .panel { border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; }
+  .chat { background: var(--surface); border: 1px solid var(--border); }
+  .panel-head { padding: 11px 16px; font-size: 13px; font-weight: 600; color: var(--muted); border-bottom: 1px solid var(--border); }
+  .chat-body { padding: 16px; display: flex; flex-direction: column; gap: 10px; min-height: 560px; }
+  .msg { max-width: 88%; padding: 10px 14px; border-radius: 14px; font-size: 15.5px; line-height: 1.45; }
+  .msg b { display: block; font-size: 12px; margin-bottom: 2px; opacity: .75; }
+  .msg.you { align-self: flex-end; background: var(--accent); color: var(--accent-text); border-bottom-right-radius: 4px; }
+  .msg.yg { align-self: flex-start; background: var(--bg); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+  .msg.typing span { display: inline-block; width: 6px; height: 6px; margin-right: 3px; border-radius: 50%; background: var(--muted); animation: blink 1s infinite; }
+  .msg.typing span:nth-child(2) { animation-delay: .2s; } .msg.typing span:nth-child(3) { animation-delay: .4s; }
+  .msg .q { display: block; margin-top: 6px; font-weight: 600; }
+  .choices { display: flex; flex-direction: column; gap: 2px; margin-top: 8px; font: 14px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  .choice { padding: 2px 8px; border-radius: 6px; }
+  .choice.yes { color: var(--accent); font-weight: 700; transition: background .15s; }
+  .choice.yes.pressed { background: var(--accent); color: var(--accent-text); }
+  .msg .hint { display: block; margin-top: 6px; font-size: 12.5px; color: var(--muted); }
+  .msg .dim-note { opacity: .8; font-weight: 400; }
+  .msg.ask { border-color: var(--accent); }
+  .term .wait { color: #f2c46d; }
+  .demo .term { border-radius: 14px; }
+  .demo .term .bar { margin-bottom: 14px; align-items: center; }
+  .demo .term .bar em { transform: none; margin: 0 0 0 10px; font-size: 12px; }
+  .demo .term-body { min-height: 400px; font-size: 13.5px; }
+  .demo-note { margin: 16px 0 0; color: var(--muted); max-width: 720px; }
+  .demo-section { border-top: 0; padding-top: 0; }
+  .badge { display: inline-flex; align-items: center; gap: 8px; align-self: start; justify-self: start; margin-bottom: 18px; padding: 7px 14px;
+    border-radius: 999px; background: var(--surface); border: 1px solid var(--accent); color: var(--accent); font-weight: 600; font-size: 15px; text-decoration: none; }
+  .badge .mic { width: 18px; height: 18px; }
+  .mic rect { fill: currentColor; }
+  .accent { color: var(--accent); }
+  .voice { background: var(--surface); }
+  .voice-icon { width: 56px; height: 56px; border-radius: 50%; background: var(--accent); color: var(--accent-text); display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+  .voice-icon .mic { width: 28px; height: 28px; }
+  .voice .steps li { background: var(--bg); }
+  .msg .spoken { font-weight: 400; opacity: .85; margin-left: 4px; }
   .promises { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
   .promises li { padding-left: 30px; position: relative; }
   .promises li::before { content: "✓"; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
@@ -98,7 +137,9 @@
     .hero { grid-template-columns: 1fr; gap: 32px; padding: 24px 0 48px; }
     h1 { font-size: 34px; } .lead { font-size: 18px; }
     .steps, .grid { grid-template-columns: 1fr; }
-    .term-body { min-height: 400px; }
+    .demo { grid-template-columns: 1fr; }
+    .chat-body { min-height: 600px; }
+    .demo .term-body { min-height: 260px; }
     nav { display: none; }
     .wrap { padding: 0 16px; }
   }
@@ -120,42 +161,85 @@
       <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#2f5bd3"/><path d="M8 11l5 5-5 5" stroke="white" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 22h8" stroke="white" stroke-width="3" stroke-linecap="round"/></svg>
       YourGeeky
     </a>
-    <nav><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
+    <nav><a href="#voice">Voice</a><a href="#ai">Which AI</a><a href="#how">How it works</a><a href="#help">What it helps with</a><a href="#faq">Questions</a><a href="#suggest">Suggestions</a></nav>
   </header>
 
   <div class="hero">
     <div>
-      <h1>The Terminal, in plain English.</h1>
-      <p class="lead">Someone told you to "just open Terminal and run this"? YourGeeky does it with you. Say what you need in your own words. It explains each step and asks before changing anything.</p>
-      <p class="powered">Works with <strong>Claude Code</strong>, the AI assistant from Anthropic. YourGeeky sets it up for you and makes it beginner friendly.</p>
+      <a class="badge" href="#voice"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> New: just say what you need</a>
+      <h1>The Terminal, in plain English. <span class="accent">Just say it.</span></h1>
+      <p class="lead">Someone told you to "just open Terminal and run this"? YourGeeky does it with you. Say what you need out loud, or type it, in your own words. It explains each step and asks before changing anything.</p>
+      <p class="powered">YourGeeky is <strong>free</strong>. It runs on Google's free AI, or on <strong>Claude Code</strong> from Anthropic if you already have a paid Claude plan. The line below sets everything up.</p>
       <div class="install" id="install">
-        <p>To install, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
+        <p><strong>To set up YourGeeky and its AI</strong>, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
         <div class="cmd">
           <code id="cmd">curl -fsSL https://raw.githubusercontent.com/sbattelle-coder/YourGeeky/main/install.sh | bash</code>
           <button class="copy" id="copy" type="button">Copy</button>
         </div>
-      </div>
-    </div>
-    <div class="term">
-      <div class="bar"><span></span><span></span><span></span></div>
-      <div class="term-body" id="demo">
-        <p class="you">› install Python</p>
-        <p>You want Python on your Mac. Here's my plan:</p>
-        <p class="dim">1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts</p>
-        <p>Your Mac will ask for your password. Nothing shows while you type. That's normal.</p>
-        <p>Okay to go ahead? <span class="you">yes</span></p>
-        <p>Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.</p>
+        <p class="after">It asks you one question: do you have a paid Claude plan? Most people say no, and it sets up Google's free AI, which you sign in to with any Google account. If you say yes, it sets up Claude Code instead. Then type <code>yourgeeky</code> to start.</p>
       </div>
     </div>
   </div>
 </div>
 
+<section id="voice" class="voice"><div class="wrap">
+  <div class="voice-icon"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
+  <h2>Talk to it like a person</h2>
+  <p class="intro">No typing needed. YourGeeky understands everyday speech, even when your Mac mishears a word.</p>
+  <ol class="steps">
+    <li><h3>Press the microphone key</h3><p>Or press Fn twice. Your Mac starts listening. It's built in and free.</p></li>
+    <li><h3>Say what you need</h3><p>"Can you install Python for me?" "Why does it say permission denied?" Talk the way you'd talk to a friend.</p></li>
+    <li><h3>Press Return</h3><p>YourGeeky works out what you meant, says it back to check, and then gets to work.</p></li>
+  </ol>
+</div></section>
+
+<section id="demo-section" class="demo-section"><div class="wrap">
+  <h2>See it in action</h2>
+  <div class="demo">
+    <div class="panel chat">
+      <div class="panel-head">The conversation: what you type and what YourGeeky says</div>
+      <div class="chat-body" id="chat">
+        <div class="msg you"><b>You <span class="spoken">🎤 spoken</span></b>install Python</div>
+        <div class="msg yg"><b>YourGeeky</b>You want Python on your Mac. I'll check whether you have it, install it, and make sure it works.</div>
+        <div class="msg yg ask"><b>YourGeeky</b>You don't have it yet. I'd like to install Python with Homebrew. Your Mac may ask for your password.<span class="q">Okay to go ahead?</span><span class="choices"><span class="choice yes pressed">❯ 1. Yes</span><span class="choice">&nbsp; 2. No</span></span><span class="hint">Press Return for Yes, or choose No</span></div>
+        <div class="msg you"><b>You</b>⏎ Return <span class="dim-note">(Yes, install it)</span></div>
+        <div class="msg yg"><b>YourGeeky</b>Done! Python 3.13 is installed. Type python3 to start it.</div>
+      </div>
+    </div>
+    <div class="panel term">
+      <div class="bar"><span></span><span></span><span></span><em>The commands it runs for you</em></div>
+      <div class="term-body" id="term">
+        <p><span class="ok">$</span> python3 --version</p>
+        <p class="dim">zsh: command not found: python3</p>
+        <p class="ok">✓ You said yes. Going ahead.</p>
+        <p><span class="ok">$</span> brew install python</p>
+        <p class="dim">==&gt; Downloading python@3.13<br>==&gt; Pouring python@3.13<br>python@3.13 is installed</p>
+        <p><span class="ok">$</span> python3 --version</p>
+        <p class="dim">Python 3.13.1</p>
+      </div>
+    </div>
+  </div>
+  <p class="demo-note">You only talk to YourGeeky in plain English. It works out the Terminal commands and runs them for you. Before anything that changes your Mac, it stops and shows a Yes/No choice, and nothing happens until you press Return on Yes. If your Mac asks for your password, you type it in yourself. In real life, the conversation and the commands appear in the same Terminal window. We've split them here so it's easier to follow.</p>
+</div></section>
+
+<section id="ai"><div class="wrap">
+  <h2>The AI behind YourGeeky</h2>
+  <p class="intro">YourGeeky doesn't do the work alone. It teams up with an AI assistant that works right inside your Mac's Terminal, so it can actually do things on your computer for you. You choose which one when you install.</p>
+  <ul class="grid">
+    <li><h3>Free: Google's AI</h3><p>Google's Antigravity CLI. Sign in with any Google account and pay nothing. Good for everyday help, with a daily usage limit.</p></li>
+    <li><h3>Upgrade: Claude Code</h3><p>The AI assistant from Anthropic, the company behind Claude. It needs a paid Claude plan (Pro starts at $20 a month) and gives you more room to work.</p></li>
+    <li><h3>Either way, it does the typing</h3><p>It works out the right commands, runs them, reads what comes back, and knows what to try next.</p></li>
+    <li><h3>Either way, it asks first</h3><p>Before it runs anything, it asks for your permission. You can always say no.</p></li>
+  </ul>
+  <p class="intro" style="margin-top:24px">On their own, these assistants are built for programmers and talk like them. YourGeeky gives them plain-English instructions and extra safety rules, so they explain every step as if you've never opened the Terminal before. You can switch any time with <code>yourgeeky --use claude</code> or <code>yourgeeky --use google</code>.</p>
+</div></section>
+
 <section id="how"><div class="wrap">
   <h2>How it works</h2>
   <ol class="steps">
-    <li><h3>Say what you need</h3><p>"Install Python." "What does this error mean?" "Run these steps from the guide." No special words needed.</p></li>
+    <li><h3>Say what you need</h3><p>Type <code>yourgeeky</code> in Terminal, then just write or say what you want: "Install Python." "What does this error mean?" From then on, what you type is a message to YourGeeky, not a command, so plain English is exactly right.</p></li>
     <li><h3>See the plan</h3><p>YourGeeky says back what it heard and lists the steps in plain words before it does anything.</p></li>
-    <li><h3>Say yes, and it's done</h3><p>Claude Code does the work behind the scenes, then YourGeeky checks that it worked.</p></li>
+    <li><h3>Say yes, and it's done</h3><p>The AI does the work behind the scenes, then YourGeeky checks that it worked.</p></li>
   </ol>
 </div></section>
 
@@ -188,10 +272,12 @@
 
 <section id="faq"><div class="wrap">
   <h2>Questions</h2>
+  <details><summary>Can I talk instead of typing?</summary><p>Yes. Once YourGeeky is running, press the microphone key on your keyboard (or press Fn twice) and just say what you need. Your Mac's built-in Dictation types your words in for you, then press Return. Don't worry if it mishears a word. YourGeeky works out what you meant and checks with you if it's not sure. If Dictation is off, turn it on in System Settings, under Keyboard.</p></details>
   <details><summary>Do I need to know anything about computers?</summary><p>No. If you can type a sentence, you can use YourGeeky.</p></details>
-  <details><summary>What do I need?</summary><p>A Mac and a Claude account. YourGeeky works with Claude Code, the AI assistant from Anthropic, to do its work. If you don't have Claude Code yet, YourGeeky offers to install it the first time you start.</p></details>
-  <details><summary>How is this different from using Claude Code on its own?</summary><p>Claude Code is built for programmers. YourGeeky gives it plain-English instructions, safety rules, and step-by-step explanations made for people who have never used the Terminal.</p></details>
-  <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. To leave, type <code>/exit</code>.</p></details>
+  <details><summary>What do I need?</summary><p>A Mac and a free Google account. If you already pay for Claude, you can use that instead. The install line sets up everything else.</p></details>
+  <details><summary>Is it free?</summary><p>Yes. YourGeeky is free, and so is Google's AI that it uses by default, up to a daily limit. If you want more, you can switch to Claude Code, which needs a paid Claude plan (Pro starts at $20 a month).</p></details>
+  <details><summary>How is this different from using the AI on its own?</summary><p>Google's AI and Claude Code are built for programmers. YourGeeky gives them plain-English instructions, safety rules, and step-by-step explanations made for people who have never used the Terminal.</p></details>
+  <details><summary>How do I start it after installing?</summary><p>Open Terminal, type <code>yourgeeky</code>, and press Return. Now you're chatting with YourGeeky, so type in plain English. To leave, type <code>/exit</code>. After that, the Terminal is back to normal and only understands commands again.</p></details>
   <details><summary>Does it work on Windows?</summary><p>Not yet. The first version is for Mac.</p></details>
   <details><summary>Is it safe?</summary><p>It asks before anything that changes your computer, and you can always say no. Nothing happens without your yes.</p></details>
 </div></section>
@@ -266,76 +352,103 @@
   });
 </script>
 <script>
-  // Homepage demo: plays sample conversations in the fake Terminal. The static
-  // conversation in #demo stays in place when motion is reduced or scripts are off.
+  // Homepage demo: the chat on the left and the commands YourGeeky runs on the
+  // right play out together. The static example stays when motion is reduced.
   (function () {
-    var box = document.getElementById('demo');
-    if (!box || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var chat = document.getElementById('chat'), term = document.getElementById('term');
+    if (!chat || !term || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
     var SCENES = [
       [['you', 'install Python'],
-       ['say', "You want Python on your Mac. Here's my plan:"],
-       ['dim', '1. Check whether you already have it<br>2. Install it with Homebrew<br>3. Make sure it starts'],
-       ['say', 'Your Mac will ask for your password. Nothing shows while you type. That\'s normal.'],
-       ['ask', 'Okay to go ahead?', 'yes'],
-       ['work', 'Installing Python', 'Python installed'],
-       ['say', 'Done. Python 3.13 is installed. Type <span class="you">python3</span> to start it.']],
-      [['you', 'it says command not found'],
-       ['say', 'That means your Mac can\'t find the program you typed. Let me check why.'],
-       ['work', 'Looking for Node', 'Found Node'],
-       ['say', 'Node is installed, but your Terminal doesn\'t know where it is. I can add it to your settings so this stops happening.'],
-       ['ask', 'Okay to change your Terminal settings?', 'yes'],
-       ['say', 'Fixed. Open a new Terminal window and <span class="you">node</span> will work.']],
-      [['you', 'my screen is frozen and won\'t stop'],
-       ['say', 'Something is still running. Hold <strong>Control</strong> and press <strong>C</strong> to stop it.'],
-       ['dim', 'That works for most programs. If it doesn\'t, tell me what you see and I\'ll help.'],
-       ['say', 'You\'re back. Nothing was lost.']]
+       ['yg', "You want Python on your Mac. I'll check whether you have it, install it, and make sure it works."],
+       ['cmd', 'python3 --version', ['zsh: command not found: python3']],
+       ['ask', "You don't have it yet. I'd like to install Python with Homebrew. Your Mac may ask for your password.", 'Yes, install it'],
+       ['cmd', 'brew install python', ['==> Downloading python@3.13', '==> Pouring python@3.13', 'python@3.13 is installed']],
+       ['cmd', 'python3 --version', ['Python 3.13.1']],
+       ['yg', 'Done! Python 3.13 is installed. Type python3 to start it.']],
+      [['you', 'it says command not found when I type node'],
+       ['yg', 'Let me find out why.'],
+       ['cmd', 'which node', ['node not found']],
+       ['cmd', 'ls /opt/homebrew/bin/node', ['/opt/homebrew/bin/node']],
+       ['ask', "Node is installed, but your Terminal doesn't know where to look. I'd like to add one line to your Terminal settings.", 'Yes, fix it'],
+       ['cmd', "echo 'export PATH=\"/opt/homebrew/bin:$PATH\"' >> ~/.zshrc", []],
+       ['yg', 'Fixed. Open a new Terminal window and node will work.']],
+      [['you', 'where did my download go?'],
+       ['cmd', 'ls -t ~/Downloads | head -3', ['budget-2026.xlsx', 'holiday-photo.jpg', 'invoice.pdf']],
+       ['ask', 'Your newest download is budget-2026.xlsx, in your Downloads folder. Want me to open the folder in Finder?', 'Yes, open it'],
+       ['cmd', 'open ~/Downloads', []],
+       ['yg', "Done. It's open in Finder."]]
     ];
     var wait = function (ms) { return new Promise(function (r) { setTimeout(r, ms); }); };
-    var add = function (html, cls) {
-      var p = document.createElement('p');
-      p.className = 'fade' + (cls ? ' ' + cls : '');
-      p.innerHTML = html;
-      box.appendChild(p);
-      return p;
+    var esc = function (t) { return t.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); };
+    var bubble = function (who, html) {
+      var d = document.createElement('div');
+      d.className = 'msg fade ' + who;
+      d.innerHTML = '<b>' + (who.indexOf('you') === 0 ? 'You' : 'YourGeeky') + '</b>' + html;
+      chat.appendChild(d);
+      return d;
     };
     var type = function (el, prefix, text) {
       var i = 0;
       return new Promise(function (done) {
         (function next() {
-          el.innerHTML = prefix + text.slice(0, i) + '<span class="caret"></span>';
-          if (i++ < text.length) setTimeout(next, 45 + Math.random() * 60);
-          else { el.innerHTML = prefix + text; done(); }
+          el.innerHTML = prefix + esc(text.slice(0, i)) + '<span class="caret"></span>';
+          if (i++ < text.length) setTimeout(next, 30 + Math.random() * 40);
+          else { el.innerHTML = prefix + esc(text); done(); }
         })();
       });
     };
     var step = function (s) {
       if (s[0] === 'you') {
-        var p = add('', 'you');
-        return wait(300).then(function () { return type(p, '› ', s[1]); }).then(function () { return wait(700); });
+        var d = bubble('you', '');
+        var head = '<b>You <span class="spoken">🎤 spoken</span></b>';
+        return wait(300).then(function () { return type(d, head, s[1]); }).then(function () { return wait(600); });
       }
       if (s[0] === 'ask') {
-        var q = add(s[1] + ' ');
-        var a = document.createElement('span');
-        a.className = 'you';
-        q.appendChild(a);
-        return wait(900).then(function () { return type(a, '', s[2]); }).then(function () { return wait(500); });
+        // A confirm: YourGeeky asks, the Terminal waits, the person taps Yes.
+        var q = bubble('yg ask', esc(s[1]) + '<span class="q">Okay to go ahead?</span>' +
+          '<span class="choices"><span class="choice yes">❯ 1. Yes</span><span class="choice">&nbsp; 2. No</span></span>' +
+          '<span class="hint">Press Return for Yes, or choose No</span>');
+        var w = document.createElement('p');
+        w.className = 'wait fade';
+        w.textContent = '⏸ Waiting for your OK...';
+        term.appendChild(w);
+        return wait(2200).then(function () {
+          q.querySelector('.yes').classList.add('pressed');
+          return wait(500);
+        }).then(function () {
+          w.className = 'ok';
+          w.textContent = '✓ You said yes. Going ahead.';
+          var d = bubble('you key', '⏎ Return <span class="dim-note">(' + esc(s[2]) + ')</span>');
+          return wait(900);
+        });
       }
-      if (s[0] === 'work') {
-        var w = add(s[1], 'dim'), n = 0;
-        return new Promise(function (done) {
-          var t = setInterval(function () {
-            w.textContent = s[1] + '.'.repeat(++n % 4);
-            if (n > 9) { clearInterval(t); w.innerHTML = '<span class="ok">✓</span> ' + s[2]; done(); }
-          }, 250);
-        }).then(function () { return wait(400); });
+      if (s[0] === 'yg') {
+        var t = bubble('yg typing', '<span></span><span></span><span></span>');
+        return wait(900).then(function () {
+          t.className = 'msg yg';
+          t.innerHTML = '<b>YourGeeky</b>' + esc(s[1]);
+          return wait(1600);
+        });
       }
-      add(s[1], s[0] === 'dim' ? 'dim' : '');
-      return wait(1400);
+      var line = document.createElement('p');
+      line.className = 'fade';
+      term.appendChild(line);
+      return type(line, '<span class="ok">$</span> ', s[1]).then(function () {
+        return s[2].reduce(function (c, out) {
+          return c.then(function () {
+            var o = document.createElement('p');
+            o.className = 'dim fade';
+            o.textContent = out;
+            term.appendChild(o);
+            return wait(450);
+          });
+        }, wait(300));
+      }).then(function () { return wait(500); });
     };
     var play = function (i) {
-      box.innerHTML = '';
-      SCENES[i].reduce(function (chain, s) { return chain.then(function () { return step(s); }); }, Promise.resolve())
-        .then(function () { return wait(3500); })
+      chat.innerHTML = ''; term.innerHTML = '';
+      SCENES[i].reduce(function (c, s) { return c.then(function () { return step(s); }); }, wait(400))
+        .then(function () { return wait(4000); })
         .then(function () { play((i + 1) % SCENES.length); });
     };
     play(0);
