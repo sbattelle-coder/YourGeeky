@@ -110,6 +110,9 @@
   a.why-claude-btn { flex-shrink: 0; background: var(--accent); color: var(--accent-text); font-weight: 700; text-decoration: none; padding: 13px 24px; border-radius: 10px; font-size: 17px; }
   a.why-claude-btn:hover { filter: brightness(1.08); }
   @media (max-width: 760px) { .why-claude { flex-direction: column; align-items: flex-start; padding: 20px; } }
+  .setup-col { max-width: 720px; }
+  a.cta { display: inline-block; margin-top: 4px; background: var(--accent); color: var(--accent-text); font-weight: 700; font-size: 17px; text-decoration: none; padding: 13px 24px; border-radius: 10px; }
+  a.cta:hover { filter: brightness(1.08); }
   .safety .qa p { margin: 0 0 12px; }
   .more-btn { display: block; width: fit-content; margin-top: 8px; padding: 3px 10px; font: inherit; font-size: 12.5px; font-weight: 600; color: var(--accent); background: transparent; border: 1px solid var(--accent); border-radius: 999px; cursor: pointer; }
   .more-btn:hover { background: var(--accent); color: var(--accent-text); }
@@ -225,48 +228,8 @@
       <a class="badge" href="#voice"><svg class="mic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg> New: just say what you need</a>
       <h1>The Terminal, in plain English.<br><span class="accent">Just say it.</span></h1>
       <p class="lead">Someone told you to "just open Terminal and run this"? Getting into the Terminal is scary for most of us. We're not programmers! YourGeeky does it with you. Say what you need out loud, or type it, in your own words. It explains each step and asks before changing anything.</p>
-      <p class="powered">YourGeeky is <strong>free</strong>. It runs on Google's free AI, or on <strong>Claude Code</strong> from Anthropic if you already have a paid Claude plan. The line below sets everything up.</p>
-      <div class="safety" id="safety">
-        <h2>Is this safe?</h2>
-        <p>Yes. Pasting commands you don't understand into the Terminal is a fair thing to be careful about, so here is exactly what the install line does, and nothing more.</p>
-        <h3>What the install line does</h3>
-        <ol>
-          <li><strong>Downloads YourGeeky's installer from this website.</strong> It's a plain text file, so anyone can <a href="/install.sh">read every line of it</a> before running it.</li>
-          <li><strong>Puts YourGeeky in its own folder</strong> called <code>.yourgeeky</code> inside your home folder. It doesn't touch system files and doesn't ask for your Mac password.</li>
-          <li><strong>Adds one line to your Terminal settings</strong> (only if needed) so that typing <code>yourgeeky</code> works.</li>
-          <li><strong>Asks you one question</strong>, then installs either Google's free AI or Claude Code, using the official installer from Google or Anthropic.</li>
-        </ol>
-        <h3>Why it's safe to use</h3>
-        <ul>
-          <li><strong>It asks before it acts.</strong> Before running anything that changes your Mac, it shows you a Yes/No choice. Nothing happens unless you say yes, and you can always say no.</li>
-          <li><strong>You stay in charge of your password.</strong> If your Mac needs your password, you type it yourself. YourGeeky warns you before it's needed.</li>
-          <li><strong>It has built-in safety rules.</strong> It never deletes files outside a folder you choose. It won't run anything it can't explain in one sentence. If instructions you paste look risky, it stops and tells you why.</li>
-          <li><strong>It's easy to remove.</strong> Ask YourGeeky to uninstall itself, or delete the hidden <code>.yourgeeky</code> folder in your home folder.</li>
-        </ul>
-        <h3>How do I know YourGeeky won't do something bad?</h3>
-        <div class="qa">
-        <p>It's a fair question to ask about anything that works on your computer. Here's the honest answer.</p>
-        <p><strong>You approve every change.</strong> YourGeeky can look things up on its own, like checking whether Python is installed. But before it changes anything, it stops, shows you the exact command, and waits for your Yes. If you never say yes, nothing changes.</p>
-        <p><strong>There's nothing hidden.</strong> All of YourGeeky's code is public on GitHub for anyone to check. It's just a few plain text files, including the plain-English instructions it gives the AI. Anyone can <a href="https://github.com/sbattelle-coder/YourGeeky/blob/main/prompts/guide.md" target="_blank" rel="noopener">read those instructions</a> on GitHub, and people who know computers can check that it does what this page says.</p>
-        <p><strong>It only works while you're using it.</strong> It doesn't run in the background, start up on its own, or keep watching your computer. When you close the Terminal window, it stops.</p>
-        <p><strong>We don't collect anything.</strong> YourGeeky has no ads, no tracking and no account with us. It never sends your conversations to us.</p>
-        <p><strong>The AI comes from companies you've heard of.</strong> The thinking is done by Google's or Anthropic's AI, which have their own safety rules on top of ours.</p>
-        <p><strong>And the honest part:</strong> no software is perfect, and AI can misunderstand. That's why the final say is always yours. If a step doesn't make sense, say no, or ask "why?", and it will explain before doing anything.</p>
-        </div>
-        <h3>Good to know</h3>
-        <ul>
-          <li>To understand your request, what you type or say (and the results of the commands it runs) is sent to the AI you chose, Google or Anthropic, under their privacy terms. Don't share passwords or private information in the chat.</li>
-          <li>AI can make mistakes. That's exactly why YourGeeky explains each step and waits for your yes. If something doesn't sound right, say no and ask it why.</li>
-        </ul>
-      </div>
-      <div class="install" id="install">
-        <p><strong>To set up YourGeeky and its AI</strong>, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
-        <div class="cmd">
-          <code id="cmd">curl -fsSL https://yourgeeky.com/install.sh | bash</code>
-          <button class="copy" id="copy" type="button">Copy</button>
-        </div>
-        <p class="after">It asks you one question: do you have a paid Claude plan? Most people say no, and it sets up Google's free AI, which you sign in to with any Google account. If you say yes, it sets up Claude Code instead. Then type <code>yourgeeky</code> to start.</p>
-      </div>
+      <p class="powered">YourGeeky is <strong>free</strong>. It runs on Google's free AI, or on <strong>Claude Code</strong> from Anthropic if you already have a paid Claude plan. Setting it up takes one line.</p>
+      <a class="cta" href="#install">Set up YourGeeky</a>
     </div>
   </div>
 </div>
@@ -314,6 +277,50 @@
   </div>
   <p class="demo-note">You only talk to YourGeeky in plain English. It works out the Terminal commands and runs them for you. Before anything that changes your Mac, it stops and shows a Yes/No choice, and nothing happens until you press Return on Yes. If your Mac asks for your password, you type it in yourself. In real life, the conversation and the commands appear in the same Terminal window. We've split them here so it's easier to follow.</p>
 </div></section>
+
+<section id="setup" class="setup"><div class="wrap"><div class="setup-col">
+  <div class="safety" id="safety">
+    <h2>Is this safe?</h2>
+    <p>Yes. Pasting commands you don't understand into the Terminal is a fair thing to be careful about, so here is exactly what the install line does, and nothing more.</p>
+    <h3>What the install line does</h3>
+    <ol>
+      <li><strong>Downloads YourGeeky's installer from this website.</strong> It's a plain text file, so anyone can <a href="/install.sh">read every line of it</a> before running it.</li>
+      <li><strong>Puts YourGeeky in its own folder</strong> called <code>.yourgeeky</code> inside your home folder. It doesn't touch system files and doesn't ask for your Mac password.</li>
+      <li><strong>Adds one line to your Terminal settings</strong> (only if needed) so that typing <code>yourgeeky</code> works.</li>
+      <li><strong>Asks you one question</strong>, then installs either Google's free AI or Claude Code, using the official installer from Google or Anthropic.</li>
+    </ol>
+    <h3>Why it's safe to use</h3>
+    <ul>
+      <li><strong>It asks before it acts.</strong> Before running anything that changes your Mac, it shows you a Yes/No choice. Nothing happens unless you say yes, and you can always say no.</li>
+      <li><strong>You stay in charge of your password.</strong> If your Mac needs your password, you type it yourself. YourGeeky warns you before it's needed.</li>
+      <li><strong>It has built-in safety rules.</strong> It never deletes files outside a folder you choose. It won't run anything it can't explain in one sentence. If instructions you paste look risky, it stops and tells you why.</li>
+      <li><strong>It's easy to remove.</strong> Ask YourGeeky to uninstall itself, or delete the hidden <code>.yourgeeky</code> folder in your home folder.</li>
+    </ul>
+    <h3>How do I know YourGeeky won't do something bad?</h3>
+    <div class="qa">
+    <p>It's a fair question to ask about anything that works on your computer. Here's the honest answer.</p>
+    <p><strong>You approve every change.</strong> YourGeeky can look things up on its own, like checking whether Python is installed. But before it changes anything, it stops, shows you the exact command, and waits for your Yes. If you never say yes, nothing changes.</p>
+    <p><strong>There's nothing hidden.</strong> All of YourGeeky's code is public on GitHub for anyone to check. It's just a few plain text files, including the plain-English instructions it gives the AI. Anyone can <a href="https://github.com/sbattelle-coder/YourGeeky/blob/main/prompts/guide.md" target="_blank" rel="noopener">read those instructions</a> on GitHub, and people who know computers can check that it does what this page says.</p>
+    <p><strong>It only works while you're using it.</strong> It doesn't run in the background, start up on its own, or keep watching your computer. When you close the Terminal window, it stops.</p>
+    <p><strong>We don't collect anything.</strong> YourGeeky has no ads, no tracking and no account with us. It never sends your conversations to us.</p>
+    <p><strong>The AI comes from companies you've heard of.</strong> The thinking is done by Google's or Anthropic's AI, which have their own safety rules on top of ours.</p>
+    <p><strong>And the honest part:</strong> no software is perfect, and AI can misunderstand. That's why the final say is always yours. If a step doesn't make sense, say no, or ask "why?", and it will explain before doing anything.</p>
+    </div>
+    <h3>Good to know</h3>
+    <ul>
+      <li>To understand your request, what you type or say (and the results of the commands it runs) is sent to the AI you chose, Google or Anthropic, under their privacy terms. Don't share passwords or private information in the chat.</li>
+      <li>AI can make mistakes. That's exactly why YourGeeky explains each step and waits for your yes. If something doesn't sound right, say no and ask it why.</li>
+    </ul>
+  </div>
+  <div class="install" id="install">
+    <p><strong>To set up YourGeeky and its AI</strong>, open the <strong>Terminal</strong> app on your Mac, paste this line, and press Return:</p>
+    <div class="cmd">
+      <code id="cmd">curl -fsSL https://yourgeeky.com/install.sh | bash</code>
+      <button class="copy" id="copy" type="button">Copy</button>
+    </div>
+    <p class="after">It asks you one question: do you have a paid Claude plan? Most people say no, and it sets up Google's free AI, which you sign in to with any Google account. If you say yes, it sets up Claude Code instead. Then type <code>yourgeeky</code> to start.</p>
+  </div>
+</div></div></section>
 
 <section id="ai"><div class="wrap">
   <h2>The AI behind YourGeeky</h2>
