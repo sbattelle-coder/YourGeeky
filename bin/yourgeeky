@@ -155,6 +155,7 @@ main() {
 
   say "Hi, I'm YourGeeky. Tell me what you need in plain words, like \"install Python\"."
   say "I'll explain each step and ask before changing anything. Type /exit to leave."
+  say "Prefer to talk? Press the microphone key (or Fn twice) to speak instead of typing."
   say ""
 
   local prompt
